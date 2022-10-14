@@ -13,7 +13,7 @@ public:
   }
   ~AVLTree()
   {
-    delete_node(root);
+    delete_subtree(root);
   }
 
   struct AVLNode{
@@ -38,6 +38,7 @@ public:
   void pop(const T& _v);
   T pop_max();
   T pop_min();
+  void print();
   
 private:
   AVLNode *clone(AVLNode *t) const
@@ -50,11 +51,11 @@ private:
   AVLNode *find_pos(const T&);
   AVLNode *precessor(const AVLNode *);
   AVLNode *successor(const AVLNode *);
-  void delete_node(AVLNode *);
+  void delete_subtree(AVLNode *);
   void left_rotate(AVLNode *);
   void right_rotate(AVLNode *);
   void maintain_node(AVLNode *);
-
+  void print_subtree(AVLNode *);
   
 public:
   AVLNode *root;
@@ -76,17 +77,21 @@ void AVLTree<T>::insert(const T& _v)
       ptr = pptr;
       if(ptr->value == _v){
         std::cout << "Already inserted same value." << std::endl;
-        break;
+        return;
       }
       if(ptr->value > _v)
         pptr = ptr->left;
       else
         pptr = ptr->right;
     }
-    if(ptr->value > _v)
+    if(ptr->value > _v){
       ptr->left = new AVLNode(_v);
-    else
+      ptr->left->parent = ptr;
+    }
+    else{
       ptr->right = new AVLNode(_v);
+      ptr->right->parent = ptr;
+    }
     maintain_node(ptr);
   }
 }
@@ -101,29 +106,40 @@ bool AVLTree<T>::find(const T& _v){
 
 template<typename T>
 void AVLTree<T>::pop(const T& _v){
-  if(!find(_v)) std::cerr << "Cannot pop due to no existing." << std::endl;
+  std::cout << "check point, value is " << _v << std::endl;
+  if(!find(_v)){std::cerr << "Cannot pop due to no existing." << std::endl; return;}
   AVLNode *ptr = find_pos(_v);
   AVLNode *pptr = precessor(ptr);
-  AVLNode *ppptr;
+  AVLNode *tr;
   if(pptr != nullptr){
+  std::cout << "case1" << std::endl;
     ptr->value = pptr->value;
-    ppptr = pptr->parent;
+    tr = pptr->parent;
+    if(pptr == tr->left) tr->left = nullptr;
+    else tr->right = nullptr;
     delete pptr;
   }
   else{
+  std::cout << "case2" << std::endl;
     pptr = successor(ptr);
     if(pptr != nullptr){
       ptr->value = pptr->value;
-      ppptr = pptr->parent;
+      tr = pptr->parent;
+      if(pptr == tr->left) tr->left = nullptr;
+      else tr->right = nullptr;
       delete pptr;
     }
     else{
-      ppptr = ptr->parent;
+  std::cout << "case3" << std::endl;
+      tr = ptr->parent;
+      if(ptr == tr->left) tr->left = nullptr;
+      else tr->right = nullptr;
       delete ptr;
     }
   }
-  std::cout << "Successfully popping!";
-  if(ppptr != nullptr) maintain_node(ppptr);
+  std::cout << "Successfully popping!" << std::endl;
+  std::cout << "check point 2, parent's value is " << tr->value << std::endl;
+  if(tr != nullptr) maintain_node(tr);
 }
 
 template<typename T>
@@ -144,6 +160,12 @@ T AVLTree<T>::pop_min(){
     ptr = ptr->left;
   T ret = ptr->value;
   pop(ptr);
+}
+
+template<typename T>
+void AVLTree<T>::print()
+{
+  print_subtree(root);
 }
 
 ////////////////////////////////
@@ -188,10 +210,10 @@ typename AVLTree<T>::AVLNode* AVLTree<T>::successor(const AVLNode *ptr){
 }
 
 template<typename T>
-void AVLTree<T>::delete_node(AVLNode *ptr){
+void AVLTree<T>::delete_subtree(AVLNode *ptr){
   if(ptr != nullptr){
-    delete_node(ptr->left);
-    delete_node(ptr->right);
+    delete_subtree(ptr->left);
+    delete_subtree(ptr->right);
     delete ptr;
   }
   ptr = nullptr;
@@ -275,6 +297,18 @@ void AVLTree<T>::maintain_node(AVLNode *ptr)
     maintain_node(ptr->parent);
   }
 }
+
+template<typename T>
+void AVLTree<T>::print_subtree(AVLNode *ptr){
+  if(ptr != nullptr){
+    std::cout << "Value is " << ptr->value << std::endl;
+    std::cout << "LeftChild: " << std::endl;
+    print_subtree(ptr->left);
+    std::cout << "RightChild: " << std::endl;
+    print_subtree(ptr->right);
+  }
+}
+
 
 #endif
 
