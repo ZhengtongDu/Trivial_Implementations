@@ -55,7 +55,9 @@ private:
   void left_rotate(AVLNode *);
   void right_rotate(AVLNode *);
   void maintain_node(AVLNode *);
-  void print_subtree(AVLNode *);
+  void balance(AVLNode *);
+  void print_subtree(const AVLNode *);
+  bool check(const AVLNode *);
   
 public:
   AVLNode *root;
@@ -85,12 +87,10 @@ void AVLTree<T>::insert(const T& _v)
         pptr = ptr->right;
     }
     if(ptr->value > _v){
-      ptr->left = new AVLNode(_v);
-      ptr->left->parent = ptr;
+      ptr->left = new AVLNode(_v, ptr);
     }
     else{
-      ptr->right = new AVLNode(_v);
-      ptr->right->parent = ptr;
+      ptr->right = new AVLNode(_v, ptr);
     }
     maintain_node(ptr);
   }
@@ -106,13 +106,11 @@ bool AVLTree<T>::find(const T& _v){
 
 template<typename T>
 void AVLTree<T>::pop(const T& _v){
-  std::cout << "check point, value is " << _v << std::endl;
   if(!find(_v)){std::cerr << "Cannot pop due to no existing." << std::endl; return;}
   AVLNode *ptr = find_pos(_v);
   AVLNode *pptr = precessor(ptr);
   AVLNode *tr;
   if(pptr != nullptr){
-  std::cout << "case1" << std::endl;
     ptr->value = pptr->value;
     tr = pptr->parent;
     if(pptr == tr->left) tr->left = nullptr;
@@ -120,7 +118,6 @@ void AVLTree<T>::pop(const T& _v){
     delete pptr;
   }
   else{
-  std::cout << "case2" << std::endl;
     pptr = successor(ptr);
     if(pptr != nullptr){
       ptr->value = pptr->value;
@@ -130,15 +127,17 @@ void AVLTree<T>::pop(const T& _v){
       delete pptr;
     }
     else{
-  std::cout << "case3" << std::endl;
       tr = ptr->parent;
+      if(tr == nullptr){
+        delete ptr;
+        root = nullptr;
+        return;
+      }
       if(ptr == tr->left) tr->left = nullptr;
       else tr->right = nullptr;
       delete ptr;
     }
   }
-  std::cout << "Successfully popping!" << std::endl;
-  std::cout << "check point 2, parent's value is " << tr->value << std::endl;
   if(tr != nullptr) maintain_node(tr);
 }
 
@@ -165,6 +164,7 @@ T AVLTree<T>::pop_min(){
 template<typename T>
 void AVLTree<T>::print()
 {
+  if(root == nullptr) std::cerr << "Emptry tree." << std::endl;
   print_subtree(root);
 }
 
@@ -226,25 +226,31 @@ void AVLTree<T>::left_rotate(AVLNode *ptr){
   AVLNode *p = ptr->parent;
   if(p == nullptr){ // solve the situation when ptr is root
     root = ptr->right;
+    root->parent = nullptr;
     ptr->right = root->left;
+    if(ptr->right != nullptr)
+      ptr->right->parent = ptr;
     root->left = ptr;
-    maintain_node(root->left);
-    maintain_node(root);
+    root->left->parent = root;
   }
   else{
     if(p->left == ptr){
       p->left = ptr->right;
+      p->left->parent = p;
       ptr->right = p->left->left;
+      if(ptr->right != nullptr)
+        ptr->right->parent = ptr;
       p->left->left = ptr;
-      maintain_node(p->left->left);
-      maintain_node(p->left);
+      p->left->left->parent = p->left;
     }
     else{
       p->right = ptr->right;
+      p->right->parent = p;
       ptr->right = p->right->left;
+      if(ptr->right != nullptr)
+        ptr->right->parent = ptr;
       p->right->left = ptr;
-      maintain_node(p->right->left);
-      maintain_node(p->right);
+      p->right->left->parent = p->right;
     }
   }
 }
@@ -256,50 +262,76 @@ void AVLTree<T>::right_rotate(AVLNode *ptr){
   AVLNode *p = ptr->parent;
   if(p == nullptr){ // solve the situation when ptr is root
     root = ptr->left;
+    root->parent = nullptr;
     ptr->left = root->right;
+    if(ptr->left != nullptr)
+      ptr->left->parent = ptr;
     root->right = ptr;
-    maintain_node(root->right);
-    maintain_node(root);
+    root->right->parent = root;
   }
   else{
     if(p->left == ptr){
       p->left = ptr->left;
+      p->left->parent = p;
       ptr->left = p->left->right;
+      if(ptr->left != nullptr)
+        ptr->left->parent = ptr;
       p->left->right = ptr;
-      maintain_node(p->left->right);
-      maintain_node(p->left);
+      p->left->parent = p->left;
     }
     else{
       p->right = ptr->left;
+      p->right->parent = p;
       ptr->left = p->right->right;
+      if(ptr->left != nullptr)
+        ptr->left->parent = ptr;
       p->right->right = ptr;
-      maintain_node(p->right->right);
-      maintain_node(p->right);
+      p->right->parent = p->right;
     }
   }
 }
 
 template<typename T>
-void AVLTree<T>::maintain_node(AVLNode *ptr)
-{
-  if(ptr == nullptr);
-  else{
-    AVLNode *_l = ptr->left;
-    AVLNode *_r = ptr->right;
-    int lh = -1;
-    int rh = -1;
-    if(_l != nullptr) lh = _l->height;
-    if(_r != nullptr) rh = _r->height;
-    ptr->height = std::max(lh, rh) + 1;
-    ptr->skew = lh - rh;
-    if(ptr->skew == 2) right_rotate(ptr);
-    else if(ptr->skew == -2) left_rotate(ptr);
-    maintain_node(ptr->parent);
+void AVLTree<T>::maintain_node(AVLNode *ptr){
+  if(ptr == nullptr)return;
+  balance(ptr);
+  if(ptr->skew == 2) {
+    if(ptr->left->skew == -1){
+      left_rotate(ptr->left);
+      balance(ptr->left->left);
+      balance(ptr->left);
+    }
+    right_rotate(ptr);
+    balance(ptr);
   }
+  else if(ptr->skew == -2){
+    if(ptr->right->skew == 1){
+      right_rotate(ptr->right);
+      balance(ptr->right->right);
+      balance(ptr->right);
+    }
+    left_rotate(ptr);
+    balance(ptr);
+  }
+  maintain_node(ptr->parent);
+}
+
+
+template<typename T>
+void AVLTree<T>::balance(AVLNode *ptr)
+{
+  AVLNode *_l = ptr->left;
+  AVLNode *_r = ptr->right;
+  int lh = -1;
+  int rh = -1;
+  if(_l != nullptr) lh = _l->height;
+  if(_r != nullptr) rh = _r->height;
+  ptr->height = std::max(lh, rh) + 1;
+  ptr->skew = lh - rh;
 }
 
 template<typename T>
-void AVLTree<T>::print_subtree(AVLNode *ptr){
+void AVLTree<T>::print_subtree(const AVLNode *ptr){
   if(ptr != nullptr){
     std::cout << "Value is " << ptr->value << std::endl;
     std::cout << "LeftChild: " << std::endl;
@@ -309,6 +341,25 @@ void AVLTree<T>::print_subtree(AVLNode *ptr){
   }
 }
 
+template<typename T>
+bool AVLTree<T>::check(const AVLNode *ptr){
+  if(ptr == nullptr) return true;
+  if(ptr->parent == nullptr && ptr != root){
+    std::cout << "root wrong" << std::endl;
+    return false;
+  }
+  if(ptr->left != nullptr && ptr->left->parent != ptr){
+    std::cout << "node " << ptr->value << " left child wrong!" << std::endl;
+    return false;
+  }
+  if(ptr->right != nullptr && ptr->right->parent != ptr){
+    std::cout << "node " << ptr->value << " right child wrong!" << std::endl;
+    return false;
+  }
+  return check(ptr->left)&&check(ptr->right);
+}
 
+
+  
 #endif
 
