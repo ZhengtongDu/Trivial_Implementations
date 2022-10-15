@@ -71,6 +71,7 @@ public:
 template<typename T>
 void AVLTree<T>::insert(const T& _v)
 {
+  std::cout << "insert value: " << _v << std::endl;
   if(root == nullptr) root = new AVLNode(_v);
   else{
     AVLNode* ptr = root;
@@ -92,6 +93,7 @@ void AVLTree<T>::insert(const T& _v)
     else{
       ptr->right = new AVLNode(_v, ptr);
     }
+    //    std::cout << "insert check: " << check(root) << std::endl;
     maintain_node(ptr);
   }
 }
@@ -106,39 +108,29 @@ bool AVLTree<T>::find(const T& _v){
 
 template<typename T>
 void AVLTree<T>::pop(const T& _v){
+  std::cout << "pop value: " << _v << std::endl;
   if(!find(_v)){std::cerr << "Cannot pop due to no existing." << std::endl; return;}
   AVLNode *ptr = find_pos(_v);
-  AVLNode *pptr = precessor(ptr);
-  AVLNode *tr;
-  if(pptr != nullptr){
-    ptr->value = pptr->value;
-    tr = pptr->parent;
-    if(pptr == tr->left) tr->left = nullptr;
-    else tr->right = nullptr;
-    delete pptr;
+  AVLNode *pt;
+  while(precessor(ptr) != nullptr || successor(ptr) != nullptr){
+    pt = (precessor(ptr) != nullptr) ? precessor(ptr) : successor(ptr);
+    ptr->value = pt->value;
+    ptr = pt;
+  }
+  AVLNode *tr = ptr->parent;
+  if(tr == nullptr){
+    root = nullptr;
+    return;
   }
   else{
-    pptr = successor(ptr);
-    if(pptr != nullptr){
-      ptr->value = pptr->value;
-      tr = pptr->parent;
-      if(pptr == tr->left) tr->left = nullptr;
-      else tr->right = nullptr;
-      delete pptr;
-    }
-    else{
-      tr = ptr->parent;
-      if(tr == nullptr){
-        delete ptr;
-        root = nullptr;
-        return;
-      }
-      if(ptr == tr->left) tr->left = nullptr;
-      else tr->right = nullptr;
-      delete ptr;
-    }
+    if(tr->left == ptr)
+      tr->left = nullptr;
+    else
+      tr->right = nullptr;
   }
-  if(tr != nullptr) maintain_node(tr);
+  delete ptr;
+  maintain_node(tr);
+  //  std::cout << "pop check: " << check(root) << std::endl;
 }
 
 template<typename T>
@@ -148,7 +140,8 @@ T AVLTree<T>::pop_max(){
   while(ptr->right != nullptr)
     ptr = ptr->right;
   T ret = ptr->value;
-  pop(ptr);
+  pop(ret);
+  return ret;
 }
 
 template<typename T>
@@ -158,14 +151,17 @@ T AVLTree<T>::pop_min(){
   while(ptr->left != nullptr)
     ptr = ptr->left;
   T ret = ptr->value;
-  pop(ptr);
+  pop(ret);
+  return ret;
 }
 
 template<typename T>
 void AVLTree<T>::print()
 {
-  if(root == nullptr) std::cerr << "Emptry tree." << std::endl;
+  if(root == nullptr){ std::cerr << "Emptry tree." << std::endl; return;}
+  std::cout << "-------------start print------------------" << std::endl;
   print_subtree(root);
+  std::cout << "--------------end print-------------------" << std::endl;
 }
 
 ////////////////////////////////
@@ -183,7 +179,7 @@ typename AVLTree<T>::AVLNode* AVLTree<T>::find_pos(const T& _v){
     else
       ptr = ptr->right;
   }
-  std::cout << "Not found." << std::endl;
+  std::cout << "Not found." << _v << std::endl;
   return nullptr;
 }
 
@@ -221,6 +217,7 @@ void AVLTree<T>::delete_subtree(AVLNode *ptr){
 
 template<typename T>
 void AVLTree<T>::left_rotate(AVLNode *ptr){
+  //  std::cout << "----------left rotate: " << ptr->value << "---------------" << std::endl;
   if(ptr==nullptr) std::cerr << "Empty node.";
   if(ptr->right==nullptr) std::cerr << "Empty node.";
   AVLNode *p = ptr->parent;
@@ -253,13 +250,16 @@ void AVLTree<T>::left_rotate(AVLNode *ptr){
       p->right->left->parent = p->right;
     }
   }
+  //  std::cout << "left rotate check: " << check(root) << std::endl;
 }
 
 template<typename T>
 void AVLTree<T>::right_rotate(AVLNode *ptr){
+  //  std::cout << "----------right rotate: " << ptr->value << "---------------" << std::endl;
   if(ptr==nullptr) std::cerr << "Empty node.";
   if(ptr->left==nullptr) std::cerr << "Empty node.";
   AVLNode *p = ptr->parent;
+  //the three cases can be revise with one case.  
   if(p == nullptr){ // solve the situation when ptr is root
     root = ptr->left;
     root->parent = nullptr;
@@ -277,7 +277,7 @@ void AVLTree<T>::right_rotate(AVLNode *ptr){
       if(ptr->left != nullptr)
         ptr->left->parent = ptr;
       p->left->right = ptr;
-      p->left->parent = p->left;
+      p->left->right->parent = p->left;
     }
     else{
       p->right = ptr->left;
@@ -286,9 +286,10 @@ void AVLTree<T>::right_rotate(AVLNode *ptr){
       if(ptr->left != nullptr)
         ptr->left->parent = ptr;
       p->right->right = ptr;
-      p->right->parent = p->right;
+      p->right->right->parent = p->right;
     }
   }
+  //  std::cout << "right rotate check: " << check(root) << std::endl;
 }
 
 template<typename T>
@@ -332,11 +333,14 @@ void AVLTree<T>::balance(AVLNode *ptr)
 
 template<typename T>
 void AVLTree<T>::print_subtree(const AVLNode *ptr){
+  if(ptr == nullptr) std::cout << "NULL" << std::endl;
   if(ptr != nullptr){
-    std::cout << "Value is " << ptr->value << std::endl;
-    std::cout << "LeftChild: " << std::endl;
+    std::cout << "Current Node's value: " << ptr->value << std::endl;
+    std::cout << "Value " << ptr->value << "'s ";
+    std::cout << "LeftChild is " << std::endl;
     print_subtree(ptr->left);
-    std::cout << "RightChild: " << std::endl;
+    std::cout << "Value " << ptr->value << "'s ";
+    std::cout << "RightChild is " << std::endl;
     print_subtree(ptr->right);
   }
 }
@@ -358,7 +362,6 @@ bool AVLTree<T>::check(const AVLNode *ptr){
   }
   return check(ptr->left)&&check(ptr->right);
 }
-
 
   
 #endif
