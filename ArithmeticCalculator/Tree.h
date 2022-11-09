@@ -8,7 +8,7 @@
 
 using namespace std;
 
-enum element_type {num, op, paren};
+enum element_type {num, op};
 
 class TreeNode
 {
@@ -16,67 +16,43 @@ public:
   TreeNode *left;
   TreeNode *right;
   TreeNode *parent;
-  TreeNode *next;
   element_type node_type;
   double num_element;
   char op_element;
-  TreeNode *paren_in;
-  TreeNode *paren_out;
-  int parenlock = 0;
-  
+  int parenlock;
+
   //Constructors
   TreeNode() = delete; // Disable default constructor
 
-  TreeNode(const double& _num, const element_type& _e_type): num_element(_num), node_type(_e_type) // Generate number node
+  // Generate number node
+  TreeNode(const double& _num, const element_type& _e_type): num_element(_num), node_type(_e_type)
   {
     if(node_type != num)
       {
-        std::cout << "wrong ndoe type!" << std::endl;
+        std::cout << "Error happens when generating node because node type is not num!" << std::endl;
         return;
       }
     op_element = 0;
-    paren_in = nullptr;
-    paren_out = nullptr;
-    next = nullptr;
     left = nullptr;
     right = nullptr;
     parent = nullptr;
     parenlock = 0;
   }
 
-  TreeNode(const char& _op, const element_type& _e_type): op_element(_op), node_type(_e_type) // Generate operator node
+  // Generate operator node
+  TreeNode(const char& _op, const element_type& _e_type): op_element(_op), node_type(_e_type)
   {
     if(node_type != op)
       {
-        std::cout << "wrong node type!" << std::endl;
+        std::cout << "Error happens when generating node because node type is not op!" << std::endl;
         return;
       }
     num_element = 0;
-    paren_in = nullptr;
-    paren_out = nullptr;
-    next = nullptr;
     left = nullptr;
     right = nullptr;
     parent = nullptr;
     parenlock = 0;
   }
-  
-  TreeNode(const element_type& _e_type): node_type(_e_type) //Generate parenthese node
-  {
-    if(node_type != paren)
-      {
-        std::cout << "wrong input!" << std::endl;
-        return;
-      }
-    num_element = 0;
-    op_element = 0;
-    next = nullptr;
-    left = nullptr;
-    right = nullptr;
-    parent = nullptr;
-    parenlock = 0;
-  }
-
 };
 
 //////////////////////////////////////////////////////////////////
@@ -100,8 +76,7 @@ bool is_left_parenthese(char c)
 bool is_right_parenthese(char c)
 { return (c == ')');}
 
-
-// Convert function
+// Convert function into vector of strings
 vector<string> split_string(const string& str)
 {
   int idx = 0;
@@ -117,7 +92,7 @@ vector<string> split_string(const string& str)
         }
       else if (is_point(c))
         {
-          cout << "wrong input: point without number!" << endl;
+          cout << "Error happens when spliting string because an unexpected point appears!" << endl;
           return strvector;
         }
       else if (is_num(c))
@@ -133,7 +108,7 @@ vector<string> split_string(const string& str)
                 {
                   if(pointflag)
                     {
-                      cout << "wrong input: more than one point!" << endl;
+                      cout << "Error happens when spliting string because an unexpected point appears!" << endl;
                       return strvector;}
                   else
                     pointflag = true;
@@ -146,7 +121,7 @@ vector<string> split_string(const string& str)
         }
       else
         {
-          cout << "Error when generating string vector because of invalid char!" << endl;
+          cout << "Error happens when generating string vector because of invalid char!" << endl;
           return strvector;
         }
     }
@@ -158,9 +133,9 @@ vector<string> split_string(const string& str)
 ////////////////////////////////////////////////////////////////////////
 
 
-/////////////////////////////////////////////////
-// Functions to generate list and binary tree. //
-/////////////////////////////////////////////////
+////////////////////////////////////////
+// Functions to generate binary tree. //
+////////////////////////////////////////
 
 //To check if the number of left parentheses is equal to that of right parenthese.
 bool check_parenthese(const vector<string>& str)
@@ -178,91 +153,29 @@ bool check_parenthese(const vector<string>& str)
     }
   return (parenthese == 0);
 }
-/*
-//Convert vector of strings into a data structure like linked list.
-TreeNode* generate_list(vector<string> str)
-{
-  int n = str.size();
-  if(n == 0) //empty vector
-    {
-      cout << "Error when generating list because the vector is empty!" << endl;
-      return nullptr;
-    }
-  if(check_parenthese(str) == false) // wrong parentheses matching
-    {
-      cout << "Error when generating list because of wrong parentheses matching!" << endl;
-      return nullptr;
-    }
-  TreeNode *head = nullptr; // Use it to record the head of list;
-  TreeNode *ptr = nullptr;
-  TreeNode *nextptr = nullptr;
-  int i = 0;
-  while((i < n) && (str[i] != ")"))// The latter condition is always true!
-    {
-      // generating node
-      int parenlen = 0; 
-      if(is_num(str[i][0]) == true)
-        nextptr = new TreeNode(stod(str[i]), num);
-      else if (is_op(str[i][0]) == true)
-        nextptr = new TreeNode(str[i][0], op);
-      else if (str[i] == "(")
-        {
-          int parenflag = 1;
-          while(parenflag != 0)
-            {
-              parenlen++;
-              if(str[i + parenlen] == "(")
-                parenflag++;
-              if(str[i + parenlen] == ")")
-                parenflag--;
-            }
-          nextptr = new TreeNode(paren);
-          nextptr->paren_in = generate_list(vector<string>(str.begin()+i+1, str.begin()+i+parenlen));
-          nextptr->paren_in->paren_out = nextptr;
-        }
-      // dealing with linking
-      if(i == 0)
-        {
-          head = nextptr;
-          ptr = head;
-        }
-      else
-        {
-          ptr->next = nextptr;
-          ptr = ptr->next;
-        }
-      i += parenlen + 1;
-      parenlen = 0;
-    }
-  return head;
-}
 
-void print_list(TreeNode* head)
-{
-  if(head == nullptr)return;
-  while(head != nullptr)
-    {
-      if(head->node_type == paren)
-        {
-          cout << endl << "paren in: ";
-          print_list(head->paren_in);
-          cout << "paren out" << endl;
-        }
-      else if(head->node_type == num)
-        cout << head->num_element << " ";
-      else if(head->node_type == op)
-        cout << head->op_element << " ";
-      head = head->next;
-    }
-}
-*/
-////////////////////////////////////////////////////////
-// End of functions to generate list and binary tree. //
-////////////////////////////////////////////////////////
+///////////////////////////////////////////////
+// End of functions to generate binary tree. //
+///////////////////////////////////////////////
 
 ////////////////////////////////////////////////////
 // New version of binary notation tree generation //
 ////////////////////////////////////////////////////
+
+int count_paren(const vector<string>& str, int idx)
+{
+      int parenflag = 1;
+      int parenlen = 0;
+      while(parenflag != 0)
+        {
+          parenlen++;
+          if(str[idx + parenlen] == "(")
+            parenflag++;
+          if(str[idx + parenlen] == ")")
+            parenflag--;
+        }
+      return parenlen;
+}
 
 bool check_substr_logic(const vector<string>& str)
 {
@@ -276,22 +189,14 @@ bool check_substr_logic(const vector<string>& str)
       else if(is_op(str[i][0]) && !numflag);
       else if((str[i] == "(") && numflag)
         {
-          int parenflag = 1;
-          while(parenflag != 0)
-            {
-              parenlen++;
-              if(str[i + parenlen] == "(")
-                parenflag++;
-              if(str[i + parenlen] == ")")
-                parenflag--;
-            }
+          parenlen = count_paren(str, i);
           if(check_substr_logic(vector<string>(str.begin()+i+1, str.begin()+i+parenlen)) == false)
             return false;
         }
       else return false;
-          numflag = !numflag;
-          i += parenlen + 1;
-          parenlen = 0;
+      numflag = !numflag;
+      i += parenlen + 1;
+      parenlen = 0;
     }
   return true;
 }
@@ -324,6 +229,7 @@ bool compare_priority(const char& c1, const char& c2)
   else return false;
 }
 
+
 TreeNode* generate_subtree(const vector<string>& str)
 {
   // Check if parentheses in expression match
@@ -347,16 +253,7 @@ TreeNode* generate_subtree(const vector<string>& str)
     subroot = new TreeNode(stod(str[0]), num);
   else
     {
-      int parenflag = 1;
-      parenlen = 0;
-      while(parenflag != 0)
-        {
-          parenlen++;
-          if(str[0 + parenlen] == "(")
-            parenflag++;
-          if(str[0 + parenlen] == ")")
-            parenflag--;
-        }
+      parenlen = count_paren(str, 0);
       subroot = generate_subtree(vector<string>(str.begin()+1, str.begin() + parenlen));
       lock_on(subroot);
     }
@@ -364,45 +261,12 @@ TreeNode* generate_subtree(const vector<string>& str)
   TreeNode *ptr = subroot;
   TreeNode *op_ptr = nullptr;
   TreeNode *right_op_ptr = nullptr;
-  /*
-  if(i < n)
-    {
-      parenlen = 0;
-      op_ptr = new TreeNode(str[i][0], op);
-      op_ptr->left = ptr;
-      ptr->parent = op_ptr;
-      subroot = op_ptr;
-      i++;
-      if(is_num(str[i][0]) == true)
-        ptr = new TreeNode(stod(str[i]), num);
-      else
-        {
-          int parenflag = 1;
-          while(parenflag != 0)
-            {
-              parenlen++;
-              if(str[i + parenlen] == "(")
-                parenflag++;
-              if(str[i + parenlen] == ")")
-                parenflag--;
-            }
-          ptr = generate_subtree(vector<string>(str.begin() + i + 1, str.begin() + i + parenlen));
-          lock_on(ptr);
-        }
-      op_ptr->right = ptr;
-      ptr->parent = op_ptr;
-      right_op_ptr = op_ptr;
-      i += parenlen + 1;
-    }
-*/
   while(i < n)
     {
       parenlen = 0;
       op_ptr = new TreeNode(str[i][0], op);
       while((right_op_ptr != nullptr) && ((right_op_ptr->parenlock == 1)||(compare_priority(right_op_ptr->op_element, op_ptr->op_element) == true)))
         right_op_ptr = right_op_ptr->parent;
-      //      cout << "right_op_ptr->op_element is " << right_op_ptr->op_element << endl;
-      //      cout << "op_ptr->op_element is " << op_ptr->op_element << endl;
       if(right_op_ptr == nullptr)
         {
           op_ptr->left = subroot;
@@ -421,22 +285,13 @@ TreeNode* generate_subtree(const vector<string>& str)
         ptr = new TreeNode(stod(str[i]), num);
       else
         {
-          int parenflag = 1;
-          while(parenflag != 0)
-            {
-              parenlen++;
-              if(str[i + parenlen] == "(")
-                parenflag++;
-              if(str[i + parenlen] == ")")
-                parenflag--;
-            }
+          parenlen = count_paren(str, i);
           ptr = generate_subtree(vector<string>(str.begin() + i + 1, str.begin() + i + parenlen));
           lock_on(ptr);
         }
       op_ptr->right = ptr;
       ptr->parent = op_ptr;
       i += parenlen + 1;
-
       right_op_ptr = subroot;
       while(right_op_ptr->right->node_type == op)
         right_op_ptr = right_op_ptr->right;
@@ -448,13 +303,11 @@ void print_subtree(TreeNode *subroot)
 {
   if(subroot == nullptr)
     return;
-  cout << "left:" << endl;
   print_subtree(subroot->left);
   if(subroot->node_type == num)
     cout << subroot->num_element << " ";
   else
     cout << subroot->op_element << " "; 
-  cout << "right:" << endl;
   print_subtree(subroot->right);
 }
 
@@ -483,7 +336,6 @@ double compute_subtree(TreeNode *subroot)
     return subroot->num_element;
   return compute(compute_subtree(subroot->left), compute_subtree(subroot->right), subroot->op_element);
 }
-
 
 ///////////////////////////////////////////////////////
 // End of version of binary notation tree generation //

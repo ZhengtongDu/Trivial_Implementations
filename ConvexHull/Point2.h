@@ -82,6 +82,7 @@ public:
     return y;
   }
 
+  //comparison operations
   bool operator==(const Point2<T> &p) const {
     return x == p.x && y == p.y;
   }
@@ -96,6 +97,19 @@ public:
 
   bool operator<(const Point2<T> &p) const {
     return x < p.x;
+  }
+
+  bool operator>=(const Point2<T> &p) const {
+    return x >= p.x;
+  }
+
+  bool operator<=(const Point2<T> &p) const {
+    return x <= p.x;
+  }
+
+  friend std::ostream& operator<< (std::ostream& stream, const Point2<T> &p){
+    stream << "(" << p[0] << ", " << p[1] << ")";
+    return stream;
   }
   
   // member data

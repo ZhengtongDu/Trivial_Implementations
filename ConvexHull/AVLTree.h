@@ -71,7 +71,7 @@ public:
 template<typename T>
 void AVLTree<T>::insert(const T& _v)
 {
-  std::cout << "insert value: " << _v << std::endl;
+  //  std::cout << "insert value: " << _v << std::endl;
   if(root == nullptr) root = new AVLNode(_v);
   else{
     AVLNode* ptr = root;
@@ -108,7 +108,6 @@ bool AVLTree<T>::find(const T& _v){
 
 template<typename T>
 void AVLTree<T>::pop(const T& _v){
-  std::cout << "pop value: " << _v << std::endl;
   if(!find(_v)){std::cerr << "Cannot pop due to no existing." << std::endl; return;}
   AVLNode *ptr = find_pos(_v);
   AVLNode *pt;
@@ -130,7 +129,6 @@ void AVLTree<T>::pop(const T& _v){
   }
   delete ptr;
   maintain_node(tr);
-  //  std::cout << "pop check: " << check(root) << std::endl;
 }
 
 template<typename T>
