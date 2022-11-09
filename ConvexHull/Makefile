@@ -1,7 +1,8 @@
 CPP = g++
-CFLAGS = -Wall -g -std=c++11
+CFLAGS = -g -std=c++11
+# CFLAGS = -Wall -g -std=c++11
 # Change these three name "include", "main" and "test"
-INCLUDE = point2
+INCLUDE = ConvexHull
 MAIN = main
 TEST = test
 
@@ -19,7 +20,7 @@ $(INCLUDE).o: $(INCLUDE).h
 	$(CPP) $(CFLAGS) -c $(INCLUDE).h
 
 cl:
-	rm -f *.o
+	rm -f *.o *.gch
 
-clean:
-	rm -f *.o *~ *.out
+clean: cl
+	rm -f *~ *.out

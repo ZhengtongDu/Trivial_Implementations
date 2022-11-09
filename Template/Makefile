@@ -1,5 +1,6 @@
 CPP = g++
-CFLAGS = -Wall -g -std=c++11
+CFLAGS = -g -std=c++11
+# CFLAGS = -Wall -g -std=c++11
 # Change these three name "include", "main" and "test"
 INCLUDE = include
 MAIN = main
@@ -19,7 +20,7 @@ $(INCLUDE).o: $(INCLUDE).h $(INCLUDE).cpp
 	$(CPP) $(CFLAGS) -c $(INCLUDE).cpp
 
 cl:
-	rm -f *.o
+	rm -f *.o *.gch
 
-clean:
-	rm -f *.o *~ *.out
+clean: cl
+	rm -f *~ *.out
