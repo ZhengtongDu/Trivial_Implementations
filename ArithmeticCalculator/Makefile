@@ -1,7 +1,8 @@
 CPP = g++
-CFLAGS = -Wall -g -std=c++11
+CFLAGS = -g -std=c++11
+# CFLAGS = -Wall -g -std=c++11
 # Change these three name "include", "main" and "test"
-INCLUDE = 
+INCLUDE = ArithmeticCalculator
 MAIN = main
 TEST = test
 
@@ -9,14 +10,11 @@ TEST = test
 
 all: main cl
 
-main: $(MAIN).o $(INCLUDE).o
+main: $(MAIN).o
 	$(CPP) $(CFLAGS) -o $(TEST).out $(MAIN).o
 
-$(MAIN).o: $(INCLUDE).o
+$(MAIN).o: $(INCLUDE).h
 	$(CPP) $(CFLAGS) -c $(MAIN).cpp
-
-$(INCLUDE).o: $(INCLUDE).h #$(INCLUDE).cpp
-	$(CPP) $(CFLAGS) -c #$(INCLUDE).cpp
 
 cl:
 	rm -f *.o
