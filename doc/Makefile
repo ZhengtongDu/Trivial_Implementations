@@ -1,0 +1,40 @@
+# A Makefile in the parent directory for generating latex
+
+BIBTEX  := bibtex
+DVIPS   := dvips
+LATEX   := pdflatex
+PSPDF   := ps2pdf
+RM      := rm -rf
+
+all : purge summary.pdf clean
+
+# use this target to compile the latex file
+%.pdf : %.tex bib eps png pst sec
+	$(LATEX) $<
+	$(LATEX) $<
+	$(LATEX) $<
+	$(RM) *.aux *.blg *.bbl *.dvi *.gz *.log *.toc *~ */*~
+
+# use this target to clean up intermediate file yet retain the pdf doc.
+clean :
+	$(RM) *.aux *.blg *.bbl *.dvi *.gz *.log *.toc *~ */*~
+
+# use this target to purge the directory
+#  so that the folder contains only the bare necessities.
+purge : 
+	$(MAKE) --directory=pst purge
+	$(RM) *.aux *.blg *.bbl *.dvi *.gz *.log *.toc *~ */*~ eps/*.pdf *.pdf
+
+# use this target to generate a gzipped-tar ball
+#  for redistributing the source files.
+%.tar.gz : %.tex bib eps png pst sec
+	mkdir $* $*/bib $*/eps $*/png $*/pst $*/sec
+	cp $*.tex *.cls Makefile $*/
+	cp bib/*.bib $*/bib/
+	cp eps/*.eps $*/eps/
+	cp png/*.png $*/png/
+	cp pst/*.eps pst/Makefile $*/pst/
+	cp sec/*.tex $*/sec/
+	tar cvf $*.tar $*
+	gzip $*.tar
+	$(RM) $* $*.tar

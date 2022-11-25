@@ -2,7 +2,7 @@ CPP = g++
 CFLAGS = -g -std=c++11
 # CFLAGS = -Wall -g -std=c++11
 # Change these three name "include", "main" and "test"
-INCLUDE = ArithmeticCalculator
+INCLUDE = arithmeticCalculator
 MAIN = main
 TEST = test
 

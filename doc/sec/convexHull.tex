@@ -1,0 +1,31 @@
+%% 凸包设计文档
+
+\section{问题描述}
+给定二维平面上包含$n$个点的点集
+\[S = \{(x_i, y_i)\ |\ i = 1,2,\cdots n\}\]
+为了方便后面的设计，这里我们假设$x_i$互不相同，$y_i$互不相同，任意三个点不在同一条直线上；我们称$S$的凸包 (ConvexHull) $CH(S)$ 为包含 $S$ 的所有点集的所有凸多边形的交集，可以证明凸包的所有顶点都凸包是$S$上的点，因此 $CH(S)$ 可以用双向链表按顺时针方向记录凸包顶点的方式存储。
+
+\section{设计思路}
+
+解决这个问题采取的范式是“分而治之”的方法，整体算法可以分为如下几步：
+\begin{enumerate}
+\item 对点集中的所有点，按$x$坐标大小进行排序；
+\item 递归求解$CHS = CH(S)$：
+  \begin{enumerate}
+  \item 若$\sharp S == 1 \rightarrow CHS = S$;
+  \item 将$S$按$x$坐标大小分成相同大小的两个子集$L$和$R$；
+  \item 分别计算$CHL = CH(L)$和$CHR = CH(R)$；
+  \item $CHS = Merge(CHL, CHR)$。
+  \end{enumerate}
+\end{enumerate}
+
+对于其中的$Merge(CHL, CHR)$，可以用$O(N)$的时间来完成，具体形式如下：
+\begin{enumerate}
+
+\end{enumerate}
+
+对于二维平面上的点，我用point2.h这个头文件记录了point2这个模板类，它满足一般的赋值、运算操作。特别值得注意的是，对于比较操作，因为采用的方法中需要对点的$x$坐标进行排序，因此比较运算重写为对于$x$坐标进行比较。
+
+\section{代码实现}
+
+\section{算例测试}

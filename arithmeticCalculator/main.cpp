@@ -1,4 +1,4 @@
-#include"ArithmeticCalculator.h"
+#include"arithmeticCalculator.h"
 
 using namespace std;
 

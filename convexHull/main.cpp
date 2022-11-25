@@ -1,4 +1,4 @@
-#include"ConvexHull.h"
+#include"convexHull.h"
 //#include"AVLTree.h"
 #include<vector>
 using namespace std;
