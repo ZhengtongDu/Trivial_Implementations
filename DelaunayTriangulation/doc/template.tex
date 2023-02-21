@@ -1,0 +1,105 @@
+\documentclass[a4paper,oneside]{report}
+%\documentclass[a4paper]{ctexart}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{CJKutf8}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{mathrsfs}
+\usepackage{subfigure}
+\usepackage{textcomp}
+\usepackage{url}
+%\usepackage{unicode-math}
+
+\usepackage{flafter}
+\usepackage{booktabs, longtable}
+\usepackage{pxfonts}
+\usepackage{cite}
+
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\let\mathbb\relax % remove the definition by unicode-math
+\DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}
+
+\begin{document}
+%\begin{CJK*}{UTF8}{gbsn}
+\begin{CJK*}{UTF8}{gkai}
+\CJKindent
+%------------中文设置--------------------------
+\makeatletter %将文献引用作为上标出现,增加括号，
+\def\@cite#1#2{\textsuperscript{[{#1\if@tempswa , #2\fi}]}}
+\makeatother
+\newtheorem{theorem}{{定理}}
+\newtheorem{remark}{{注}}
+\newtheorem{proposition}[theorem]{{命题}}
+\newtheorem{lemma}[theorem]{{引理}}
+\newtheorem{corollary}[theorem]{{推论}}
+\newtheorem{definition}[theorem]{{定义}}
+\newtheorem{question}[theorem]{{问题}}
+
+%\renewcommand{\refname}{\centerline{参考文献}}
+\renewcommand{\bibname}{\centerline{参考文献}}
+\renewcommand{\tablename}{表}
+%\renewcommand{\captionlabeldelim}{\quad}
+%===================Image settings========================%
+\renewcommand{\figurename}{图}
+%\renewcommand{\abstractname}{摘要}
+%\renewcommand{\captionlabeldelim}{\quad} %Need caption2 macro package
+%===============End image settings========================%
+%-----------中文设置--------------------------
+
+%%%%%%%%%%%
+%% Change this!
+%%%%%%%%%%%
+
+\title{\LaTeX 文档模板 \\ \LaTeX\ document template}
+\author{杜政彤 \\ 浙江大学数学科学学院计算数学系 \\ zhengtongdu@zju.edu.cn}
+\date{17 Nov, 2022}
+
+\maketitle
+
+\input{sec/preface}
+
+%% \pagestyle{empty}
+
+\tableofcontents
+\clearpage
+
+\pagestyle{fancy}
+\fancyhead{}
+
+%%%%%%%%%%%
+%% Change this!
+%%%%%%%%%%%
+\lhead{zhengtong}
+\chead{}
+\rhead{document template}
+
+
+\chapter{This is Chapter 01}
+
+\section{This is section 1.1：插图和枚举}
+\label{sec:1.1}
+\input{sec/ubuntuInstall.tex}
+
+\chapter{This is Chapter 02}
+\section{This is section 1.2：算法和代码}
+\label{sec:reuse}
+\input{sec/reuse.tex}
+
+
+%% 这是注释部分
+{\footnotesize
+\bibliographystyle{abbrv}
+\bibliography{bib/Guide}
+}
+
+
+\end{CJK*}
+\end{document}
+

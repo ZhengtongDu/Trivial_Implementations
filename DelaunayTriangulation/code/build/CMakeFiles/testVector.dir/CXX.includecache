@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Vector.h
+iostream
+-
+cmath
+-
+
+/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/testVector.cpp
+Vector.h
+/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Vector.h
+
