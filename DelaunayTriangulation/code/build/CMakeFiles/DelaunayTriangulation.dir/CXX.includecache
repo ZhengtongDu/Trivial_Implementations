@@ -6,16 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Draw.h
-Vector.h
-/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Vector.h
-Triangle.h
-/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Triangle.h
-opencv2/opencv.hpp
--
-string
--
-
 /home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/GLOBAL.h
 iostream
 -
@@ -40,9 +30,13 @@ cmath
 GLOBAL.h
 /home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/GLOBAL.h
 
-/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/testVector.cpp
-Draw.h
-/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Draw.h
+/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/main.cpp
+Triangle.h
+/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Triangle.h
+chrono
+-
+opencv2/opencv.hpp
+-
 
 /usr/local/include/opencv4/opencv2/calib3d.hpp
 opencv2/core.hpp

@@ -1,4 +1,4 @@
-#include"triangles.h"
+#include"Triangle.h"
 #include <chrono>
 #include <opencv2/opencv.hpp>
 

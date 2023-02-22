@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <cmath>
-#include "global.h"
+#include "GLOBAL.h"
 
 class Vector2f
 {

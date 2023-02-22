@@ -4,18 +4,17 @@
 #include <iostream>
 #include <cmath>
 #include <random>
+#include <cstdlib>
+#include <time.h>
 
 const float PI = 3.1415926f;
 const float EPSILON = 0.0001; 
 const float Infinity = std::numeric_limits<float>::max();
 
-inline static float get_random_float()
-{
-    std::random_device dev;
-    std::mt19937 rng(dev());
-    std::uniform_real_distribution<float> dist(0.f, 1.f); // distribution in range [1, 6]
-
-    return dist(rng);
+inline int getRandom(int start, int size = 100) {
+    if(size < 0) size = 100;
+    srand((unsigned)time(nullptr));    
+    return start + (int)size * rand() % size;
 }
 
 inline void UpdateProgress(float progress)
