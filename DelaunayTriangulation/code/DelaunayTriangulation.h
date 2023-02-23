@@ -4,6 +4,9 @@
 #include "Triangle.h"
 #include "Draw.h"
 
+class TriangleList;
+// class TriangleTree;
+
 class TriangleTree
 {
 public:
@@ -22,6 +25,10 @@ public:
     }
 
     void deleteSubtree(TreeNode*);
+    TriangleList::ListNode* detectTriangle(const Vector2f& v) {
+        root->tri.v0 = v;
+        return nullptr;
+    }
 
 public:
     TreeNode *root;
@@ -49,7 +56,8 @@ public:
     }
 
     void triangulation(std::vector<Vector2f>);
-    
+    void addPoint(const std::vector<Vector2f>&, const int&);
+
     ListNode* head;
     ListNode* end;
 };
@@ -72,12 +80,20 @@ void TriangleList::triangulation(std::vector<Vector2f> pointSet) {
             std::swap(pointSet[i], pointSet[0]);
     }
     shuffle(pointSet);
-
+    Vector2f p_1(-1), p_2(-2);
+    Vector2f p_0 = pointSet[0];
+    Triangle boundingTri(p_0, p_1, p_2);
+    head = new ListNode(boundingTri);
+    end = head;
 }
 
 void shuffle(std::vector<Vector2f>& pointSet) {
     for(int i = 0; i < pointSet.size() * 2; i++)
         std::swap(pointSet[1], pointSet[getRandom(2, pointSet.size() - 2)]);
+}
+
+void TriangleList::addPoint(const std::vector<Vector2f>& pointSet, const int& index){
+
 }
 
 #endif // DELAUNAYTRIANGULATION_H
