@@ -15,7 +15,7 @@ random
 -
 cstdlib
 -
-time.h
+ctime
 -
 
 /home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Triangle.h

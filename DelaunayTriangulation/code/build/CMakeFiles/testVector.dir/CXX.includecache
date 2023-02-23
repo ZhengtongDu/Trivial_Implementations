@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/DelaunayTriangulation.h
+Triangle.h
+/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Triangle.h
+Draw.h
+/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Draw.h
+
 /home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Draw.h
 Vector.h
 /home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Vector.h
@@ -25,7 +31,7 @@ random
 -
 cstdlib
 -
-time.h
+ctime
 -
 
 /home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Triangle.h
@@ -41,8 +47,8 @@ GLOBAL.h
 /home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/GLOBAL.h
 
 /home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/testVector.cpp
-Draw.h
-/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/Draw.h
+DelaunayTriangulation.h
+/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/DelaunayTriangulation.h
 
 /usr/local/include/opencv4/opencv2/calib3d.hpp
 opencv2/core.hpp

@@ -43,6 +43,7 @@ public:
     }    
 };
 
+/*
 bool insideTriangle(const Vector2f& v, const Triangle& tri){
     Vector2f e0 = v - tri.v0, e1 = v - tri.v1, e2 = v - tri.v2;
     float cpro0 = crossProduct(e0, tri.e0), cpro1 = crossProduct(e1, tri.e1), cpro2 = crossProduct(e2, tri.e2); // crossProduct
@@ -52,5 +53,5 @@ bool insideTriangle(const Vector2f& v, const Triangle& tri){
         return true;
     return false;
 }
-
+*/
 #endif // TRIANGLE_H
