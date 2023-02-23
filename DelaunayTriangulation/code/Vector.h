@@ -32,6 +32,12 @@ public:
         x += v.x, y += v.y;
         return *this;
     }
+    bool operator==(const Vector2f& v) {
+        return x == v.x && y == v.y;
+    }
+    bool operator!=(const Vector2f& v) {
+        return x != v.x || y != v.y;
+    }
     friend Vector2f operator*(const float& r, const Vector2f& v) {
         return Vector2f(v.x * r, v.y * r);
     }

@@ -24,7 +24,7 @@ public:
     }
 
     Screen(int _height, int _width, std::string _name = "Default Window")
-        : height(_height), width(_width), windowName(_name) {
+        : height(_width), width(_height), windowName(_name) {
         window = cv::Mat(height, width, CV_8UC3, cv::Scalar(0));
         cv::cvtColor(window, window, cv::COLOR_BGR2RGB);
     }
@@ -45,9 +45,9 @@ public:
     void setPixel(const float& x, const float& y, cv::Point3f color = cv::Point3f(255, 255, 255)) {
         if(x + 0.5 > width || x < 0)    return;
         if(y + 0.5 > height || y < 0)    return;
-        window.at<cv::Vec3b>(x + 0.5, y + 0.5)[0] = color.x;
-        window.at<cv::Vec3b>(x + 0.5, y + 0.5)[1] = color.y;
-        window.at<cv::Vec3b>(x + 0.5, y + 0.5)[2] = color.z;
+        window.at<cv::Vec3b>(height - y - 0.5, x + 0.5)[0] = color.x;
+        window.at<cv::Vec3b>(height - y - 0.5, x + 0.5)[1] = color.y;
+        window.at<cv::Vec3b>(height - y - 0.5, x + 0.5)[2] = color.z;
     }
 
     cv::Mat window;
