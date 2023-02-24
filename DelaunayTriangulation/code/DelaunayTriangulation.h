@@ -3,6 +3,7 @@
 
 #include "Triangle.h"
 #include "Draw.h"
+#include <utility>
 
 struct TreeNode;
 struct ListNode;
@@ -17,17 +18,12 @@ struct TreeNode{
 };
 
 struct ListNode{
-        Triangle tri;
-        ListNode *pre, *next;
-        TreeNode* treenode;
-        ListNode(const Triangle& _tri)
-        : tri(_tri), pre(nullptr), next(nullptr) { }
+    Triangle tri;
+    ListNode *pre, *next;
+    TreeNode* treenode;
+    ListNode(const Triangle& _tri)
+    : tri(_tri), pre(nullptr), next(nullptr) { }
 };
-
-void crossLink(ListNode* lnode, TreeNode* tnode) {
-    lnode->treenode = tnode;
-    tnode->listnode = lnode;
-}
 
 class TriangleTree
 {
@@ -47,7 +43,6 @@ public:
 class TriangleList
 {
 public:
-
     void drawTriangulation(Screen& scn){
         ListNode* ptr = head;
         while(ptr != nullptr){
@@ -57,8 +52,11 @@ public:
     }
 
     void triangulation(std::vector<Vector2f>);
+    void linkEdge(const ListNode*);
+    void unlinkEdge(const ListNode*);
 
     ListNode* head;
+    std::vector<std::vector<ListNode*>> edgeTable;
 };
 
 /////
@@ -68,6 +66,33 @@ public:
 /////
 // Function Definition
 /////
+
+void crossLink(ListNode* lnode, TreeNode* tnode) {
+    lnode->treenode = tnode;
+    tnode->listnode = lnode;
+}
+
+void TriangleList::linkEdge(const ListNode* ptr) {
+    Triangle tri = ptr->tri;
+    std::vector<Vector2f> pointVec;
+    pointVec.push_back(tri.v0);
+    pointVec.push_back(tri.v1);
+    pointVec.push_back(tri.v2);
+    for(int i = 0; i < 3; i++)
+        for(int j = i + 1; j < 3; j++) {
+        }
+}
+
+void TriangleList::unlinkEdge(const ListNode* ptr) {
+    Triangle tri = ptr->tri;
+    std::vector<Vector2f> pointVec;
+    pointVec.push_back(tri.v0);
+    pointVec.push_back(tri.v1);
+    pointVec.push_back(tri.v2);
+    for(int i = 0; i < 3; i++)
+        for(int j = i + 1; j < 3; j++) {
+        }
+}
 
 void printTree(TreeNode* ptr) {
     if(ptr == nullptr) return;
@@ -135,20 +160,13 @@ void findTriangle(const Vector2f& v, const TreeNode* ptr, std::vector<ListNode*>
     return ;
 }
 
-inline void TriangleTree::deleteSubtree(TreeNode* ptr) {
-    if(ptr != nullptr) {
-        deleteSubtree(ptr->child0);
-        deleteSubtree(ptr->child1);
-        deleteSubtree(ptr->child2);
-        delete ptr;
-        ptr = nullptr;
-    }
-    return;
-}
-
 void shuffle(std::vector<Vector2f>& pointSet) {
     for(int i = 0; i < pointSet.size() * 2; i++) 
         std::swap(pointSet[1], pointSet[getRandom(2, pointSet.size() - 2)]);
+}
+
+void legalizeEdge(const Vector2f& point, std::pair<Vector2f, Vector2f>, TriangleList& L) {
+    
 }
 
 void addPoint(const std::vector<Vector2f>& pointSet, const int& index, TriangleTree& tree, TriangleList& L){
@@ -279,6 +297,7 @@ void change2(float& x) {
 void TriangleList::triangulation(std::vector<Vector2f> pointSet) {
     if(pointSet.size() < 3) return;
 
+    edgeTable = std::vector<std::vector<ListNode*>>(pointSet.size(), std::vector<ListNode*>(pointSet.size()));
     // select highest point and shuffle point set.    
     for(int i = 1; i < pointSet.size(); i++) {
         if((pointSet[i].y > pointSet[0].y) || (pointSet[i].y == pointSet[0].y && pointSet[i].x > pointSet[0].x))
@@ -375,5 +394,16 @@ void drawTriangulation(const TriangleList& L, Screen& scn) {
     }
 }
 
+
+inline void TriangleTree::deleteSubtree(TreeNode* ptr) {
+    if(ptr != nullptr) {
+        deleteSubtree(ptr->child0);
+        deleteSubtree(ptr->child1);
+        deleteSubtree(ptr->child2);
+        delete ptr;
+        ptr = nullptr;
+    }
+    return;
+}
 
 #endif // DELAUNAYTRIANGULATION_H
