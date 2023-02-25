@@ -512,15 +512,15 @@ void TriangleList::drawTriangulation(const std::vector<Vector2f>& pointSet, Scre
     while(ptr != nullptr) {
         std::cout << "ptr: " << ptr->tri_v0 << ", " << ptr->tri_v1 << ", " << ptr->tri_v2 << std::endl;
         Triangle tri(pointSet[ptr->tri_v0], pointSet[ptr->tri_v1], pointSet[ptr->tri_v2]);
-        std::cout << "tri: " << tri.v0 << ", " << tri.v1 << ", " << tri.v2 << std::endl;
+//        std::cout << "tri: " << tri.v0 << ", " << tri.v1 << ", " << tri.v2 << std::endl;
         drawTriangle(tri, scn);
         ptr = ptr->next;
-        std::string a = "test";
-        char p = '0' + i;
-        a += p;
-        a += ".png";
-        scn.imageWrite(a);
-        i++;
+//        std::string a = "test";
+//        char p = '0' + i;
+//        a += p;
+//        a += ".png";
+//        scn.imageWrite(a);
+//        i++;
     }
 }
 

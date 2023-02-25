@@ -2,6 +2,7 @@
 
 int main(int argc, char* argv[]){
 //    srand((unsigned)time(nullptr));    
+    Screen scn(1000, 1000, std::string("test"));
     srand((unsigned)time(nullptr));    
 
     Vector2f b(800, 800);
@@ -33,12 +34,13 @@ int main(int argc, char* argv[]){
     L.triangulation(pointSet);
     for(int i = 0; i < pointSet.size(); i++) 
         std::cout << pointSet[i] << std::endl;
-    //L.printEdgeTable();
-    //Screen scn(1000, 1000, std::string("test"));
+    int l = 0;
+    std::cout << "hello world!" << std::endl;
+    L.printEdgeTable();
 
-    //L.drawTriangulation(pointSet, scn);
+    L.drawTriangulation(pointSet, scn);
     //scn.imageWrite("test.png");
-    //scn.screenShow();
+    scn.screenShow();
 
     //std::cout << tri;
     ListNode* ptr = L.head;
