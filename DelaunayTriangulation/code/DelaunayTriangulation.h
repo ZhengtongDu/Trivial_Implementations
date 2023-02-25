@@ -9,20 +9,20 @@ struct TreeNode;
 struct ListNode;
 
 struct TreeNode{
-        Triangle tri;
-        TreeNode *child0, *child1, * child2;
-        int childNum;
-        ListNode *listnode;
-        TreeNode(const Triangle& _tri)
-        : tri(_tri), child0(nullptr), child1(nullptr), child2(nullptr), childNum(0) { }
+    int tri_v0, tri_v1, tri_v2;
+    TreeNode *child0, *child1, * child2;
+    int childNum;
+    ListNode *listnode;
+    TreeNode(int _v0, int _v1, int _v2)
+    : tri_v0(_v0), tri_v1(_v1), tri_v2(_v2), child0(nullptr), child1(nullptr), child2(nullptr), childNum(0) { }
 };
 
 struct ListNode{
-    Triangle tri;
+    int tri_v0, tri_v1, tri_v2;
     ListNode *pre, *next;
     TreeNode* treenode;
-    ListNode(const Triangle& _tri)
-    : tri(_tri), pre(nullptr), next(nullptr) { }
+    ListNode(int _v0, int _v1, int _v2)
+    : tri_v0(_v0), tri_v1(_v1), tri_v2(_v2), pre(nullptr), next(nullptr) { }
 };
 
 class TriangleTree
@@ -43,20 +43,16 @@ public:
 class TriangleList
 {
 public:
-    void drawTriangulation(Screen& scn){
-        ListNode* ptr = head;
-        while(ptr != nullptr){
-            drawTriangle(ptr->tri, scn);
-            ptr = ptr->next;
-        }
-    }
-
-    void triangulation(std::vector<Vector2f>);
-    void linkEdge(const ListNode*);
-    void unlinkEdge(const ListNode*);
-
+    void addPoint(const std::vector<Vector2f>&, const int&, TriangleTree&, TriangleList&);
+    void triangulation(std::vector<Vector2f>&);
+    void drawTriangulation(const std::vector<Vector2f>& pointSet, Screen& scn);
+    void linkEdge(ListNode*);
+    void unlinkEdge(const int, const int, ListNode* ptr);
+    void unlinkEdge(ListNode* ptr);
+    void legalizeEdge(const int, const int, const int, const std::vector<Vector2f>&);
+    void printEdgeTable();
     ListNode* head;
-    std::vector<std::vector<ListNode*>> edgeTable;
+    std::vector<std::vector<std::vector<ListNode*>>> edgeTable;
 };
 
 /////
@@ -72,60 +68,81 @@ void crossLink(ListNode* lnode, TreeNode* tnode) {
     tnode->listnode = lnode;
 }
 
-void TriangleList::linkEdge(const ListNode* ptr) {
-    Triangle tri = ptr->tri;
-    std::vector<Vector2f> pointVec;
-    pointVec.push_back(tri.v0);
-    pointVec.push_back(tri.v1);
-    pointVec.push_back(tri.v2);
-    for(int i = 0; i < 3; i++)
-        for(int j = i + 1; j < 3; j++) {
-        }
+void TriangleList::linkEdge(ListNode* ptr) {
+    int ind0 = ptr->tri_v0 + 2, ind1 = ptr->tri_v1 + 2, ind2 = ptr->tri_v2 + 2;
+    edgeTable[ind0][ind1].push_back(ptr);
+    edgeTable[ind1][ind0].push_back(ptr);
+    edgeTable[ind0][ind2].push_back(ptr);
+    edgeTable[ind2][ind0].push_back(ptr);
+    edgeTable[ind1][ind2].push_back(ptr);
+    edgeTable[ind2][ind1].push_back(ptr);
 }
 
-void TriangleList::unlinkEdge(const ListNode* ptr) {
-    Triangle tri = ptr->tri;
-    std::vector<Vector2f> pointVec;
-    pointVec.push_back(tri.v0);
-    pointVec.push_back(tri.v1);
-    pointVec.push_back(tri.v2);
-    for(int i = 0; i < 3; i++)
-        for(int j = i + 1; j < 3; j++) {
-        }
+void TriangleList::unlinkEdge(const int ind0, const int ind1, ListNode* ptr) {
+    int i = 0;
+    for(;i < edgeTable[ind0 + 2][ind1 + 2].size(); i++)
+        if(edgeTable[ind0 + 2][ind1 + 2][i] == ptr) break;
+    edgeTable[ind0 + 2][ind1 + 2].erase(edgeTable[ind0 + 2][ind1 + 2].begin() + i);
+    edgeTable[ind1 + 2][ind0 + 2].erase(edgeTable[ind1 + 2][ind0 + 2].begin() + i);
+}
+
+void TriangleList::unlinkEdge(ListNode* ptr) {
+    unlinkEdge(ptr->tri_v0, ptr->tri_v1, ptr);
+    unlinkEdge(ptr->tri_v1, ptr->tri_v2, ptr);
+    unlinkEdge(ptr->tri_v2, ptr->tri_v0, ptr);
 }
 
 void printTree(TreeNode* ptr) {
     if(ptr == nullptr) return;
-    std::cout << ptr->tri << std::endl;
+    std::cout << ptr->tri_v0 << " " << ptr->tri_v1 << " " << ptr->tri_v2 << std::endl;
     printTree(ptr->child0);
     printTree(ptr->child1);
     printTree(ptr->child2);
 }
 
-bool isLeft(const Vector2f& point, const Vector2f& v1, const Vector2f& v2) {
-    if(v1.x < 0 || v2.x < 0) {
-        if(v1.x < 0 && v2.x < 0) {
+bool isLeft(const int indr, const int ind1, const int ind2, const std::vector<Vector2f>& pointSet) {
+    Vector2f v1, v2, point;
+    if(ind1 >= 0)
+        v1 = pointSet[ind1];
+    if(ind2 >= 0)
+        v2 = pointSet[ind2];
+    if(indr >= 0)
+        point = pointSet[indr];
+    if(indr == -1) {
+        if(ind2 == -2)  return false;
+        if(ind1 == -2)  return true;
+        if((v1.y > v2.y) || (v1.y == v2.y && v1.x > v2.x)) return true;
+        return false;
+    }
+    if(indr == -2) {
+        if(ind2 == -1)  return false;
+        if(ind1 == -1)  return true;
+        if((v1.y > v2.y) || (v1.y == v2.y && v1.x > v2.x)) return false;
+        return true;
+    }
+    if(ind1 < 0 || ind2 < 0) {
+        if(ind1 < 0 && ind2 < 0) {
             std::cout << "case 1" << std::endl;
             return true; // point lies in the left of edge(v1, v2);  
         }
-        if(v1.x == -1) {
-            std::cout << "case 2" << std::endl;
-            if((v2.y < point.y) || (v2.y == point.y && v2.x < point.x))
-                return true;
-        }
-        if(v2.x == -1) {
-            std::cout << "case 3" << std::endl;
-            if((v1.y > point.y) || (v1.y == point.y && v1.x > point.x))
-                return true;
-        }
-        if(v1.x == -2) {
+        if(ind1 == -1) {
             std::cout << "case 4" << std::endl;
             if((v2.y > point.y) || (v2.y == point.y && v2.x > point.x))
                 return true;
         }
-        if(v2.x == -2) {
+        if(ind2 == -1) {
             std::cout << "case 5" << std::endl;
             if((v1.y < point.y) || (v1.y == point.y && v1.x < point.x))
+                return true;
+        }
+        if(ind1 == -2) {
+            std::cout << "case 2" << std::endl;
+            if((v2.y < point.y) || (v2.y == point.y && v2.x < point.x))
+                return true;
+        }
+        if(ind2 == -2) {
+            std::cout << "case 3" << std::endl;
+            if((v1.y > point.y) || (v1.y == point.y && v1.x > point.x))
                 return true;
         }
     }
@@ -136,25 +153,23 @@ bool isLeft(const Vector2f& point, const Vector2f& v1, const Vector2f& v2) {
     return false; // point lies in the right of edge(v1, v2);
 }
 
-bool inTriangle(const Vector2f& v, const Triangle& tri) {
-    if(isLeft(v, tri.v0, tri.v1) == false || isLeft(v, tri.v1, tri.v2) == false || isLeft(v, tri.v2, tri.v0) == false)
+bool inTriangle(const int indr, const int ind0, const int ind1, const int ind2, const std::vector<Vector2f>& pointSet) {
+    if(isLeft(indr, ind0, ind1, pointSet) == false || isLeft(indr, ind1, ind2, pointSet) == false || isLeft(indr, ind2, ind0, pointSet) == false)
         return false;
     return true;
 }
 
-void findTriangle(const Vector2f& v, const TreeNode* ptr, std::vector<ListNode*>& ptrVec) {
+void findTriangle(const int indr, const TreeNode* ptr, std::vector<ListNode*>& ptrVec, const std::vector<Vector2f>& pointSet) {
     if(ptr == nullptr)  return;
-    if(inTriangle(v, ptr->tri) == true) std::cout << "YES" << std::endl;
-    if(inTriangle(v, ptr->tri) == false) std::cout << "NO" << std::endl;
-    if(inTriangle(v, ptr->tri)) {
+    if(inTriangle(indr, ptr->tri_v0, ptr->tri_v1, ptr->tri_v2, pointSet)) {
         if(ptr->child0 == nullptr) {
             ptrVec.push_back(ptr->listnode);
             return;
         }
         else {
-            findTriangle(v, ptr->child0, ptrVec);
-            findTriangle(v, ptr->child1, ptrVec);
-            findTriangle(v, ptr->child2, ptrVec);
+            findTriangle(indr, ptr->child0, ptrVec, pointSet);
+            findTriangle(indr, ptr->child1, ptrVec, pointSet);
+            findTriangle(indr, ptr->child2, ptrVec, pointSet);
         }
     }
     return ;
@@ -165,27 +180,137 @@ void shuffle(std::vector<Vector2f>& pointSet) {
         std::swap(pointSet[1], pointSet[getRandom(2, pointSet.size() - 2)]);
 }
 
-void legalizeEdge(const Vector2f& point, std::pair<Vector2f, Vector2f>, TriangleList& L) {
-    
+inline void TriangleList::printEdgeTable() {
+    for(int i = 0; i < edgeTable.size(); i++)
+        for(int j = i + 1; j < edgeTable[i].size(); j++)
+            for(int k = 0; k < edgeTable[i][j].size(); k++) {
+                std::cout << "i: " << i - 2 << ", j: " << j - 2 << ", k: " << k + 1 << ", size = " << edgeTable[i][j].size() << ", value: ";
+                std::cout << edgeTable[i][j][k]->tri_v0 << " " << edgeTable[i][j][k]->tri_v1 << " " << edgeTable[i][j][k]->tri_v2 << std::endl;
+            }
 }
 
-void addPoint(const std::vector<Vector2f>& pointSet, const int& index, TriangleTree& tree, TriangleList& L){
+bool isConvex(int indr, int ind0, int ind1, int indl, const std::vector<Vector2f>& pointSet){
+    bool flag0, flag1;
+    flag0 = isLeft(ind0, indr, indl, pointSet);
+    flag1 = isLeft(ind1, indr, indl, pointSet);
+    return flag0 == flag1;
+}
+
+bool isLegal(int indr, int ind0, int ind1, int indl, const std::vector<Vector2f>& pointSet) {
+    if(ind0 <= 0 && ind1 <= 0) return true;
+    // is convex quadrilateral
+    bool flag0, flag1;
+    flag0 = isLeft(ind0, indr, indl, pointSet);
+    flag1 = isLeft(ind1, indr, indl, pointSet);
+    std::cout << "flag0 = " << flag0 << std::endl;
+    std::cout << "flag1 = " << flag1 << std::endl;
+    if(flag0 == flag1) return true;
+
+    if(indr < 0 || ind0 < 0 || ind1 < 0 || indl < 0) {
+        if(indr >= 0 && indl >= 0)  return false;
+        else return true;
+        if(ind0 >= 0 && ind1 >= 0)  return true;
+    }
+
+    Vector2f pr = pointSet[indr], p0 = pointSet[ind0], p1 = pointSet[ind1], pl = pointSet[indl];
+    float angleCosine0 = dotProduct(p0 - pr, p1 - pr) / ((p0 - pr).norm() * (p1 - pr).norm());
+    float angleCosine1 = dotProduct(p0 - pl, p1 - pl) / ((p0 - pl).norm() * (p1 - pl).norm());
+    if(-angleCosine0 > angleCosine1) return false;
+    return true;
+}
+
+inline void TriangleList::legalizeEdge(const int indr, const int ind0, const int ind1, const std::vector<Vector2f>& pointSet) {
+    if(edgeTable[ind0 + 2][ind1 + 2].size() < 2) return;
+    ListNode *ptr0 = edgeTable[ind0 + 2][ind1 + 2][0], *ptr1 = edgeTable[ind0 + 2][ind1 + 2][1];
+    int indl;
+    if(indr != ptr0->tri_v0 && indr != ptr0->tri_v1 && indr != ptr0->tri_v2)
+        std::swap(ptr0, ptr1); // indr is in ptr0->tri
+    if(ptr1->tri_v0 != ind0 && ptr1->tri_v0 != ind1)    indl = ptr1->tri_v0;
+    else if(ptr1->tri_v1 != ind0 && ptr1->tri_v1 != ind1)    indl = ptr1->tri_v1;
+    else    indl = ptr1->tri_v2;
+    //return ;
+    std::cout << "is here？" << std::endl;
+    if(isLegal(indr, ind0, ind1, indl, pointSet)) return;
+    std::cout << "no" << std::endl;
+
+    std::cout << "indr = " << indr << ", ind0 = " << ind0 << ", ind1 = " << ind1 << ", indl = " << indl << std::endl;
+    std::cout << "ptr0 = " << ptr0->tri_v0 << " " << ptr0->tri_v1 << " " << ptr0->tri_v2 << std::endl;
+    std::cout << "ptr1 = " << ptr1->tri_v0 << " " << ptr1->tri_v1 << " " << ptr1->tri_v2 << std::endl;
+//    return ;
+
+    TreeNode *current_treenode0 = ptr0->treenode, *current_treenode1 = ptr1->treenode;
+    ListNode *new_listnode0, *new_listnode1;
+    TreeNode *new_treenode0, *new_treenode1;
+    if(isLeft(ind1, indr, indl, pointSet)) {
+        new_listnode0 = new ListNode(indr, indl, ind1);
+        new_listnode1 = new ListNode(indl, indr, ind0);
+        new_treenode0 = new TreeNode(indr, indl, ind1);
+        new_treenode1 = new TreeNode(indl, indr, ind0);
+    }
+    else {
+        new_listnode0 = new ListNode(indr, indl, ind0);
+        new_listnode1 = new ListNode(indl, indr, ind1);
+        new_treenode0 = new TreeNode(indr, indl, ind0);
+        new_treenode1 = new TreeNode(indl, indr, ind1);
+    }
+    std::cout << "HERE____________" << std::endl;
+    crossLink(new_listnode0, new_treenode0);
+    crossLink(new_listnode1, new_treenode1);
+    linkEdge(new_listnode0);
+    linkEdge(new_listnode1);
+    current_treenode0->childNum = 2, current_treenode1->childNum = 2;
+    current_treenode0->child0 = new_treenode0, current_treenode0->child1 = new_treenode1;
+    current_treenode1->child0 = new_treenode0, current_treenode1->child1 = new_treenode1;
+
+    if(ptr0->pre == nullptr)
+        head = new_listnode0;
+    else {
+        ptr0->pre->next = new_listnode0;
+        new_listnode0->pre = ptr0->pre;
+    }
+    if(ptr1->pre == nullptr)
+        head = new_listnode1;
+    else {
+        ptr1->pre->next = new_listnode1;
+        new_listnode1->pre = ptr1->pre;
+    }
+    new_listnode0->next = ptr0->next;
+    if(new_listnode0->next != nullptr)
+        new_listnode0->next->pre = new_listnode0;
+    new_listnode1->next = ptr1->next;
+    if(new_listnode1->next != nullptr)
+        new_listnode1->next->pre = new_listnode1;
+    unlinkEdge(ptr0);
+    unlinkEdge(ptr1);
+    ListNode* ptr = head;
+    std::cout << "display list :" << std::endl;
+    while(ptr != nullptr) {
+        std::cout << ptr->tri_v0 << ", " << ptr->tri_v1 << ", " << ptr->tri_v2 << std::endl;
+        ptr = ptr->next;
+    }
+    delete ptr0;
+    delete ptr1;
+    legalizeEdge(indr, ind0, indl, pointSet);
+    legalizeEdge(indr, ind1, indl, pointSet);
+}
+
+void TriangleList::addPoint(const std::vector<Vector2f>& pointSet, const int& index, TriangleTree& tree, TriangleList& L){
     Vector2f point = pointSet[index];
     std::vector<ListNode*> ptrVec;
-    findTriangle(point, tree.root, ptrVec);
+    findTriangle(index, tree.root, ptrVec, pointSet);
     if(ptrVec.size() == 1) {
         ListNode* ptr = ptrVec[0];
-        std::cout << ptr->tri << std::endl;
-        //std::cout << ptr->tri << std::endl;
-        Vector2f tri_v0 = ptr->tri.v0, tri_v1 = ptr->tri.v1, tri_v2 = ptr->tri.v2;
+        int ind0 = ptr->tri_v0, ind1 = ptr->tri_v1, ind2 = ptr->tri_v2;
         TreeNode *current_treenode = ptr->treenode;
-        Triangle new_tri0(tri_v0, tri_v1, point), new_tri1(tri_v1, tri_v2, point), new_tri2(tri_v2, tri_v0, point);
-        ListNode *new_listnode0 = new ListNode(new_tri0);
-        ListNode *new_listnode1 = new ListNode(new_tri1);
-        ListNode *new_listnode2 = new ListNode(new_tri2);
-        TreeNode *new_treenode0 = new TreeNode(new_tri0);
-        TreeNode *new_treenode1 = new TreeNode(new_tri1);
-        TreeNode *new_treenode2 = new TreeNode(new_tri2);
+        ListNode *new_listnode0 = new ListNode(index, ind0, ind1);
+        ListNode *new_listnode1 = new ListNode(index, ind1, ind2);
+        ListNode *new_listnode2 = new ListNode(index, ind2, ind0);
+        TreeNode *new_treenode0 = new TreeNode(index, ind0, ind1);
+        TreeNode *new_treenode1 = new TreeNode(index, ind1, ind2);
+        TreeNode *new_treenode2 = new TreeNode(index, ind2, ind0);
+        linkEdge(new_listnode0);
+        linkEdge(new_listnode1);
+        linkEdge(new_listnode2);
         crossLink(new_listnode0, new_treenode0);
         crossLink(new_listnode1, new_treenode1);
         crossLink(new_listnode2, new_treenode2);
@@ -206,43 +331,52 @@ void addPoint(const std::vector<Vector2f>& pointSet, const int& index, TriangleT
         new_listnode2->next = ptr->next;
         if(new_listnode2->next != nullptr)
             new_listnode2->next->pre = new_listnode2;
+        std::cout << "add new point" << std::endl;
+        //printEdgeTable();
+        unlinkEdge(ptr);
         delete ptr;
+        std::cout << "remove old edge" << std::endl;
+        //printEdgeTable();
+        legalizeEdge(index, ind0, ind1, pointSet);
+        legalizeEdge(index, ind1, ind2, pointSet);
+        legalizeEdge(index, ind2, ind0, pointSet);
+        //std::cout << "legalize" << std::endl;
+        //printEdgeTable();
     }
     else if(ptrVec.size() == 2) {
-    std::cout << ptrVec[0]->tri << std::endl;
-    std::cout << ptrVec[1]->tri << std::endl;
         ListNode *ptr0 = ptrVec[0], *ptr1 = ptrVec[1];
-        Vector2f tri0_v0 = ptr0->tri.v0, tri0_v1 = ptr0->tri.v1, tri0_v2 = ptr0->tri.v2;
-        Vector2f tri1_v0 = ptr1->tri.v0, tri1_v1 = ptr1->tri.v1, tri1_v2 = ptr1->tri.v2;
-        Vector2f one_v0, one_v1, two_v0, two_v1;
-        std::vector<Vector2f> tmpVec0;
-        std::vector<Vector2f> tmpVec1;
-        if(tri0_v0 == tri1_v0 || tri0_v0 == tri1_v1 || tri0_v0 == tri1_v2)  tmpVec0.push_back(tri0_v0);
-        else tmpVec1.push_back(tri0_v0);
-        if(tri0_v1 == tri1_v0 || tri0_v1 == tri1_v1 || tri0_v1 == tri1_v2)  tmpVec0.push_back(tri0_v1);
-        else tmpVec1.push_back(tri0_v1);
-        if(tri0_v2 == tri1_v0 || tri0_v2 == tri1_v1 || tri0_v2 == tri1_v2)  tmpVec0.push_back(tri0_v2);
-        else {
-            tmpVec1.push_back(tri0_v2);
-            std::swap(tmpVec0[0], tmpVec0[1]);
-        }
-        if(tri1_v0 != tri0_v0 && tri1_v0 != tri0_v1 && tri1_v0 != tri0_v2)  tmpVec1.push_back(tri1_v0);
-        else if(tri1_v1 != tri0_v0 && tri1_v1 != tri0_v1 && tri1_v1 != tri0_v2)  tmpVec1.push_back(tri1_v1);
-        else tmpVec1.push_back(tri1_v2);
+        int ind00 = ptr0->tri_v0, ind01 = ptr0->tri_v1, ind02 = ptr0->tri_v2;
+        int ind10 = ptr1->tri_v0, ind11 = ptr1->tri_v1, ind12 = ptr1->tri_v2;
+        std::vector<int> tmpInd0; // points that are used twice
+        std::vector<int> tmpInd1; // points that are used once
+        if(ind00 == ind10 || ind00 == ind11 || ind00 == ind12)  tmpInd0.push_back(ind00);
+        else tmpInd1.push_back(ind00);
+        if(ind01 == ind10 || ind01 == ind11 || ind01 == ind12)  tmpInd0.push_back(ind01);
+        else tmpInd1.push_back(ind01);
+        if(ind02 == ind10 || ind02 == ind11 || ind02 == ind12)  tmpInd0.push_back(ind02);
+        else tmpInd1.push_back(ind02);
+        if(tmpInd1[0] == ind01)
+            std::swap(tmpInd0[0], tmpInd0[1]);
+        if(ind10 != ind00 && ind10 != ind01 && ind10 != ind02)  tmpInd1.push_back(ind10);
+        else if(ind11 != ind00 && ind11 != ind01 && ind11 != ind02)  tmpInd1.push_back(ind11);
+        else tmpInd1.push_back(ind12);
         TreeNode *current_treenode0 = ptr0->treenode, *current_treenode1 = ptr1->treenode;
-        Triangle new_tri00(tmpVec1[0], tmpVec0[0], point), new_tri01(tmpVec0[1], tmpVec1[0], point), new_tri10(tmpVec0[0], tmpVec1[1], point), new_tri11(tmpVec1[1], tmpVec0[1], point);
-        ListNode *new_listnode00 = new ListNode(new_tri00);
-        ListNode *new_listnode01 = new ListNode(new_tri01);
+        ListNode *new_listnode00 = new ListNode(index, tmpInd1[0], tmpInd0[0]);
+        ListNode *new_listnode01 = new ListNode(index, tmpInd0[1], tmpInd1[0]);
         new_listnode00->next = new_listnode01;
         new_listnode01->pre = new_listnode00;
-        ListNode *new_listnode10 = new ListNode(new_tri10);
-        ListNode *new_listnode11 = new ListNode(new_tri11);
+        ListNode *new_listnode10 = new ListNode(index, tmpInd0[0], tmpInd1[1]);
+        ListNode *new_listnode11 = new ListNode(index, tmpInd1[1], tmpInd0[1]);
         new_listnode10->next = new_listnode11;
         new_listnode11->pre = new_listnode10;
-        TreeNode *new_treenode00 = new TreeNode(new_tri00);
-        TreeNode *new_treenode01 = new TreeNode(new_tri01);
-        TreeNode *new_treenode10 = new TreeNode(new_tri10);
-        TreeNode *new_treenode11 = new TreeNode(new_tri11);
+        TreeNode *new_treenode00 = new TreeNode(index, tmpInd1[0], tmpInd0[0]);
+        TreeNode *new_treenode01 = new TreeNode(index, tmpInd0[1], tmpInd1[0]);
+        TreeNode *new_treenode10 = new TreeNode(index, tmpInd0[0], tmpInd1[1]);
+        TreeNode *new_treenode11 = new TreeNode(index, tmpInd1[1], tmpInd0[1]);
+        linkEdge(new_listnode00);
+        linkEdge(new_listnode01);
+        linkEdge(new_listnode10);
+        linkEdge(new_listnode11);
         crossLink(new_listnode00, new_treenode00);
         crossLink(new_listnode01, new_treenode01);
         crossLink(new_listnode10, new_treenode10);
@@ -271,8 +405,14 @@ void addPoint(const std::vector<Vector2f>& pointSet, const int& index, TriangleT
         new_listnode11->next = ptr1->next;
         if(new_listnode11->next != nullptr)
             new_listnode11->next->pre = new_listnode11;
+        unlinkEdge(ptr0);
+        unlinkEdge(ptr1);
         delete ptr0;
         delete ptr1;
+        legalizeEdge(index, tmpInd0[0], tmpInd1[0], pointSet);
+        legalizeEdge(index, tmpInd0[0], tmpInd1[1], pointSet);
+        legalizeEdge(index, tmpInd0[1], tmpInd1[0], pointSet);
+        legalizeEdge(index, tmpInd0[1], tmpInd1[1], pointSet);
     }
 }
 
@@ -286,18 +426,10 @@ void addPoint(const std::vector<Vector2f>& pointSet, const int& index, TriangleT
 //          legalizeEdge(p_r, edge)
 // 4. remove bounding triangle
 
-void change1(float& x) {
-    x = 990;
-}
+void TriangleList::triangulation(std::vector<Vector2f>& pointSet) {
+    //if(pointSet.size() < 3) return;
 
-void change2(float& x) {
-    x = 10;
-}
-
-void TriangleList::triangulation(std::vector<Vector2f> pointSet) {
-    if(pointSet.size() < 3) return;
-
-    edgeTable = std::vector<std::vector<ListNode*>>(pointSet.size(), std::vector<ListNode*>(pointSet.size()));
+    edgeTable = std::vector<std::vector<std::vector<ListNode*>>>(pointSet.size() + 2, std::vector<std::vector<ListNode*>>(pointSet.size() + 2, std::vector<ListNode*>(0)));
     // select highest point and shuffle point set.    
     for(int i = 1; i < pointSet.size(); i++) {
         if((pointSet[i].y > pointSet[0].y) || (pointSet[i].y == pointSet[0].y && pointSet[i].x > pointSet[0].x))
@@ -305,35 +437,32 @@ void TriangleList::triangulation(std::vector<Vector2f> pointSet) {
     }
     // shuffle(pointSet);
     // construct bounding triangle
-    Vector2f p_1(-1), p_2(-2); // p_1 : the leftest and highest point, p_2 : the rightest and lowest point
-    Vector2f p_0 = pointSet[0];
-    Triangle boundingTri(p_1, p_2, p_0);
-    head = new ListNode(boundingTri);
+    head = new ListNode(-2, -1, 0);
 
     TriangleTree tree;
-    tree.root = new TreeNode(boundingTri);
+    tree.root = new TreeNode(-2, -1, 0);
+    linkEdge(head);
     crossLink(head, tree.root);
 
-    std::cout << tree.root->tri << std::endl;
-
-//    std::cout << "point1 = " << pointSet[1] << std::endl;
-//    addPoint(pointSet, 1, tree, *this);
-//    std::cout << head->tri << std::endl;
-//    std::cout << head->next->tri << std::endl;
-//    std::cout << head->next->next->tri << std::endl;
-//    std::cout << "point2 = " << pointSet[2] << std::endl;
-//    addPoint(pointSet, 2, tree, *this);
     // add every point from point set
     for(int i = 1; i < pointSet.size(); i++) {
         std::cout << "add point " << i << ": " << pointSet[i] << std::endl;
         addPoint(pointSet, i, tree, *this);
     }
-
+    pointSet.push_back(Vector2f(100, 990));
+    pointSet.push_back(Vector2f(990, 10));
+    
     ListNode* ptr = head;
+    std::cout << "display list :" << std::endl;
+    while(ptr != nullptr) {
+        std::cout << ptr->tri_v0 << ", " << ptr->tri_v1 << ", " << ptr->tri_v2 << std::endl;
+        ptr = ptr->next;
+    }
+
     // remove bounding triangle
     /*
     while(ptr != nullptr) {
-        if(ptr->tri.v0.x < EPSILON || ptr->tri.v1.x < EPSILON || ptr->tri.v2.x < EPSILON) {
+        if(ptr->tri_v0 < 0 || ptr->tri_v1 < 0 || ptr->tri_v2 < 0) {
             if(ptr == head) {
                 head = head->next;
                 head->pre = nullptr;
@@ -354,46 +483,46 @@ void TriangleList::triangulation(std::vector<Vector2f> pointSet) {
     */
     // show bounding triangle
     ///*
+    printEdgeTable();
+    ptr = head;
     while(ptr != nullptr) {
-        if(ptr->tri.v0.x < 0 || ptr->tri.v1.x < 0 || ptr->tri.v2.x < 0) {
-            if(ptr->tri.v0.x == -1) {
-                change2(ptr->tri.v0.x);
-                change1(ptr->tri.v0.y);
-            }
-            else if(ptr->tri.v0.x == -2) {
-                change1(ptr->tri.v0.x);
-                change2(ptr->tri.v0.y);
-            }
-            if(ptr->tri.v1.x == -1) {
-                change2(ptr->tri.v1.x);
-                change1(ptr->tri.v1.y);
-            }
-            else if(ptr->tri.v1.x == -2) {
-                change1(ptr->tri.v1.x);
-                change2(ptr->tri.v1.y);
-            }
-            if(ptr->tri.v2.x == -1) {
-                change2(ptr->tri.v2.x);
-                change1(ptr->tri.v2.y);
-            }
-            else if(ptr->tri.v2.x == -2) {
-                change1(ptr->tri.v2.x);
-                change2(ptr->tri.v2.y);
-            }
+        if(ptr->tri_v0 < 0 || ptr->tri_v1 < 0 || ptr->tri_v2 < 0) {
+            if(ptr->tri_v0 == -1)
+                ptr->tri_v0 = pointSet.size() - 1;
+            else if(ptr->tri_v0 == -2)
+                ptr->tri_v0 = pointSet.size() - 2;
+            if(ptr->tri_v1 == -1)
+                ptr->tri_v1 = pointSet.size() - 1;
+            else if(ptr->tri_v1 == -2)
+                ptr->tri_v1 = pointSet.size() - 2;
+            if(ptr->tri_v2 == -1)
+                ptr->tri_v2 = pointSet.size() - 1;
+            else if(ptr->tri_v2 == -2)
+                ptr->tri_v2 = pointSet.size() - 2;
+
         }
         ptr = ptr->next;
     }
     //*/
 }
 
-void drawTriangulation(const TriangleList& L, Screen& scn) {
-    ListNode* ptr = L.head;
+void TriangleList::drawTriangulation(const std::vector<Vector2f>& pointSet, Screen& scn) {
+    ListNode* ptr = head;
+    int i = 0;
     while(ptr != nullptr) {
-        drawTriangle(ptr->tri, scn);
+        std::cout << "ptr: " << ptr->tri_v0 << ", " << ptr->tri_v1 << ", " << ptr->tri_v2 << std::endl;
+        Triangle tri(pointSet[ptr->tri_v0], pointSet[ptr->tri_v1], pointSet[ptr->tri_v2]);
+        std::cout << "tri: " << tri.v0 << ", " << tri.v1 << ", " << tri.v2 << std::endl;
+        drawTriangle(tri, scn);
         ptr = ptr->next;
+        std::string a = "test";
+        char p = '0' + i;
+        a += p;
+        a += ".png";
+        scn.imageWrite(a);
+        i++;
     }
 }
-
 
 inline void TriangleTree::deleteSubtree(TreeNode* ptr) {
     if(ptr != nullptr) {

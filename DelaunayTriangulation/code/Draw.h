@@ -74,6 +74,7 @@ void drawPoint(const Vector2f& a, Screen& scn, int radius = 3) {
 }
 
 void drawTriangle(const Triangle& tri, Screen& scn) {
+    std::cout << tri.v0 << ", " << tri.v1 << ", " << tri.v2 << std::endl;
     drawPoint(tri.v0, scn);
     drawPoint(tri.v1, scn);
     drawPoint(tri.v2, scn);
