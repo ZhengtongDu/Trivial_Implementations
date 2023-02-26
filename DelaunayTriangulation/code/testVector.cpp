@@ -24,9 +24,9 @@ int main(int argc, char* argv[]){
     pointSet.push_back(a);
     pointSet.push_back(f);
     pointSet.push_back(g);
-//    pointSet.push_back(h);
-//    pointSet.push_back(i);
-//    pointSet.push_back(j);
+    pointSet.push_back(h);
+    pointSet.push_back(i);
+    pointSet.push_back(j);
     //Triangle tri(a, b, c);
     //drawTriangle(tri, scn);
     TriangleList L;
@@ -34,20 +34,15 @@ int main(int argc, char* argv[]){
     L.triangulation(pointSet);
     for(int i = 0; i < pointSet.size(); i++) 
         std::cout << pointSet[i] << std::endl;
-    int l = 0;
-    std::cout << "hello world!" << std::endl;
-    L.printEdgeTable();
+    //std::cout << "hello world!" << std::endl;
+    //L.printEdgeTable();
 
     L.drawTriangulation(pointSet, scn);
+    std::cout << "?" << std::endl;
     //scn.imageWrite("test.png");
+
     scn.screenShow();
 
     //std::cout << tri;
-    ListNode* ptr = L.head;
-    while(ptr->next != nullptr) {
-        ptr = ptr->next;
-        delete ptr->pre;
-    }
-    delete ptr;
     return 0;
 }
