@@ -437,15 +437,8 @@ void TriangleList::triangulation(std::vector<Vector2f>& pointSet) {
 
     // remove bounding triangle
     ///*
-    while(ptr->next != nullptr) {
-        std::cout << "tri_0 = " << ptr->tri_v0 << ", 1 = " << ptr->tri_v1 << ", 2 = " << ptr->tri_v2 << std::endl;
-        ptr = ptr->next;
-    }
-        std::cout << "tri_0 = " << ptr->tri_v0 << ", 1 = " << ptr->tri_v1 << ", 2 = " << ptr->tri_v2 << std::endl;
-    ptr = head;
     while(ptr != nullptr) {
         if(ptr->tri_v0 < 0 || ptr->tri_v1 < 0 || ptr->tri_v2 < 0) {
-        std::cout << "tri_0 = " << ptr->tri_v0 << ", 1 = " << ptr->tri_v1 << ", 2 = " << ptr->tri_v2 << std::endl;
             if(ptr == head) {
                 head = head->next;
                 head->pre = nullptr;
@@ -464,7 +457,6 @@ void TriangleList::triangulation(std::vector<Vector2f>& pointSet) {
         else
             ptr = ptr->next;
     }
-    std::cout << "end this?" << std::endl;
     //*/
     // show bounding triangle
     /*
