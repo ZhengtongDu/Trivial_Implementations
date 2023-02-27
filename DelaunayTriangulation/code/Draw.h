@@ -21,12 +21,14 @@ public:
         : height(_size), width(_size), windowName(_name) {
         window = cv::Mat(height, width, CV_8UC3, cv::Scalar(0));
         cv::cvtColor(window, window, cv::COLOR_BGR2RGB);
+        cv::namedWindow(_name, cv::WINDOW_AUTOSIZE);
     }
 
     Screen(int _height, int _width, std::string _name = "Default Window")
         : height(_width), width(_height), windowName(_name) {
         window = cv::Mat(height, width, CV_8UC3, cv::Scalar(0));
         cv::cvtColor(window, window, cv::COLOR_BGR2RGB);
+        cv::namedWindow(_name, cv::WINDOW_AUTOSIZE);
     }
 
     void screenShow() {
@@ -35,7 +37,6 @@ public:
             cv::imshow(windowName, window);
             key = cv::waitKey(0);
         }
-        
     }
 
     void imageWrite(std::string _name = "Default.png") {

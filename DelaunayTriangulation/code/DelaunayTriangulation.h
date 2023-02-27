@@ -131,27 +131,20 @@ bool isLeft(const int indr, const int ind1, const int ind2, const std::vector<Ve
         return true;
     }
     if(ind1 < 0 || ind2 < 0) {
-        if(ind1 < 0 && ind2 < 0) {
-            std::cout << "case 1" << std::endl;
-            return true; // point lies in the left of edge(v1, v2);  
-        }
+        if(ind1 < 0 && ind2 < 0) return true; // point lies in the left of edge(v1, v2);  
         if(ind1 == -1) {
-            std::cout << "case 4" << std::endl;
             if((v2.y > point.y) || (v2.y == point.y && v2.x > point.x))
                 return true;
         }
         if(ind2 == -1) {
-            std::cout << "case 5" << std::endl;
             if((v1.y < point.y) || (v1.y == point.y && v1.x < point.x))
                 return true;
         }
         if(ind1 == -2) {
-            std::cout << "case 2" << std::endl;
             if((v2.y < point.y) || (v2.y == point.y && v2.x < point.x))
                 return true;
         }
         if(ind2 == -2) {
-            std::cout << "case 3" << std::endl;
             if((v1.y > point.y) || (v1.y == point.y && v1.x > point.x))
                 return true;
         }
@@ -214,8 +207,6 @@ bool isLegal(int indr, int ind0, int ind1, int indl, const std::vector<Vector2f>
     bool flag0, flag1;
     flag0 = isLeft(ind0, indr, indl, pointSet);
     flag1 = isLeft(ind1, indr, indl, pointSet);
-    std::cout << "flag0 = " << flag0 << std::endl;
-    std::cout << "flag1 = " << flag1 << std::endl;
     if(flag0 == flag1) return true;
 
     if(indr < 0 || ind0 < 0 || ind1 < 0 || indl < 0) {
@@ -240,15 +231,7 @@ inline void TriangleList::legalizeEdge(const int indr, const int ind0, const int
     if(ptr1->tri_v0 != ind0 && ptr1->tri_v0 != ind1)    indl = ptr1->tri_v0;
     else if(ptr1->tri_v1 != ind0 && ptr1->tri_v1 != ind1)    indl = ptr1->tri_v1;
     else    indl = ptr1->tri_v2;
-    //return ;
-    std::cout << "is here？" << std::endl;
     if(isLegal(indr, ind0, ind1, indl, pointSet)) return;
-    std::cout << "no" << std::endl;
-
-    std::cout << "indr = " << indr << ", ind0 = " << ind0 << ", ind1 = " << ind1 << ", indl = " << indl << std::endl;
-    std::cout << "ptr0 = " << ptr0->tri_v0 << " " << ptr0->tri_v1 << " " << ptr0->tri_v2 << std::endl;
-    std::cout << "ptr1 = " << ptr1->tri_v0 << " " << ptr1->tri_v1 << " " << ptr1->tri_v2 << std::endl;
-//    return ;
 
     std::shared_ptr<TreeNode> current_treenode0 = ptr0->treenode, current_treenode1 = ptr1->treenode;
     std::shared_ptr<ListNode> new_listnode0, new_listnode1;
@@ -269,12 +252,10 @@ inline void TriangleList::legalizeEdge(const int indr, const int ind0, const int
     crossLink(new_listnode1, new_treenode1);
     linkEdge(new_listnode0);
     linkEdge(new_listnode1);
-    std::cout << "HERE____________" << std::endl;
 
     current_treenode0->childNum = 2, current_treenode1->childNum = 2;
     current_treenode0->child0 = new_treenode0, current_treenode0->child1 = new_treenode1;
     current_treenode1->child0 = new_treenode0, current_treenode1->child1 = new_treenode1;
-    std::cout << "HERE____________" << std::endl;
 
     if(ptr0->pre == nullptr)
         head = new_listnode0;
@@ -294,15 +275,9 @@ inline void TriangleList::legalizeEdge(const int indr, const int ind0, const int
     new_listnode1->next = ptr1->next;
     if(new_listnode1->next != nullptr)
         new_listnode1->next->pre = new_listnode1;
-    std::cout << "HERE____________" << std::endl;
     unlinkEdge(ptr0);
     unlinkEdge(ptr1);
     std::shared_ptr<ListNode> ptr = head;
-    std::cout << "display list :" << std::endl;
-    while(ptr != nullptr) {
-        std::cout << ptr->tri_v0 << ", " << ptr->tri_v1 << ", " << ptr->tri_v2 << std::endl;
-        ptr = ptr->next;
-    }
     ptr0.reset();
     ptr1.reset();
     legalizeEdge(indr, ind0, indl, pointSet);
@@ -346,17 +321,11 @@ void TriangleList::addPoint(const std::vector<Vector2f>& pointSet, const int& in
         new_listnode2->next = ptr->next;
         if(new_listnode2->next != nullptr)
             new_listnode2->next->pre = new_listnode2;
-        std::cout << "add new point" << std::endl;
-        //printEdgeTable();
         unlinkEdge(ptr);
         ptr.reset();
-        std::cout << "remove old edge" << std::endl;
-        //printEdgeTable();
         legalizeEdge(index, ind0, ind1, pointSet);
         legalizeEdge(index, ind1, ind2, pointSet);
         legalizeEdge(index, ind2, ind0, pointSet);
-        //std::cout << "legalize" << std::endl;
-        //printEdgeTable();
     }
     else if(ptrVec.size() == 2) {
         std::shared_ptr<ListNode> ptr0 = ptrVec[0], ptr1 = ptrVec[1];
@@ -443,7 +412,7 @@ void TriangleList::addPoint(const std::vector<Vector2f>& pointSet, const int& in
 // 4. remove bounding triangle
 
 void TriangleList::triangulation(std::vector<Vector2f>& pointSet) {
-    //if(pointSet.size() < 3) return;
+    if(pointSet.size() < 3) return;
 
     edgeTable = std::vector<std::vector<std::vector<std::shared_ptr<ListNode>>>>(pointSet.size() + 2, std::vector<std::vector<std::shared_ptr<ListNode>>>(pointSet.size() + 2, std::vector<std::shared_ptr<ListNode>>(0)));
     // select highest point and shuffle point set.    
@@ -451,7 +420,7 @@ void TriangleList::triangulation(std::vector<Vector2f>& pointSet) {
         if((pointSet[i].y > pointSet[0].y) || (pointSet[i].y == pointSet[0].y && pointSet[i].x > pointSet[0].x))
             std::swap(pointSet[i], pointSet[0]);
     }
-    // shuffle(pointSet);
+    shuffle(pointSet);
     // construct bounding triangle
     head.reset(new ListNode(-2, -1, 0));
 
@@ -465,40 +434,34 @@ void TriangleList::triangulation(std::vector<Vector2f>& pointSet) {
         std::cout << "add point " << i << ": " << pointSet[i] << std::endl;
         addPoint(pointSet, i, tree, *this);
     }
-    pointSet.push_back(Vector2f(100, 990));
-    pointSet.push_back(Vector2f(990, 10));
     
     std::shared_ptr<ListNode> ptr = head;
-    std::cout << "display list :" << std::endl;
-    while(ptr != nullptr) {
-        std::cout << ptr->tri_v0 << ", " << ptr->tri_v1 << ", " << ptr->tri_v2 << std::endl;
-        ptr = ptr->next;
-    }
 
     // remove bounding triangle
-    /*
+    ///*
     while(ptr != nullptr) {
         if(ptr->tri_v0 < 0 || ptr->tri_v1 < 0 || ptr->tri_v2 < 0) {
             if(ptr == head) {
                 head = head->next;
                 head->pre = nullptr;
-                delete ptr;
+                ptr.reset();
                 ptr = head;
             }
             else {
-                ListNode* tmp = ptr->next;
+                std::shared_ptr<ListNode> tmp = ptr->next;
                 ptr->pre->next = ptr->next;
                 ptr->next->pre = ptr->pre;
-                delete ptr;
+                ptr.reset();
                 ptr = tmp;
             }
         }
         else
             ptr = ptr->next;
     }
-    */
+
+    //*/
     // show bounding triangle
-    ///*
+    /*
     printEdgeTable();
     ptr = head;
     while(ptr != nullptr) {
@@ -519,36 +482,16 @@ void TriangleList::triangulation(std::vector<Vector2f>& pointSet) {
         }
         ptr = ptr->next;
     }
-    //*/
+    */
 }
 
 void TriangleList::drawTriangulation(const std::vector<Vector2f>& pointSet, Screen& scn) {
     std::shared_ptr<ListNode> ptr = head;
     int i = 0;
     while(ptr != nullptr) {
-//        std::cout << "ptr: " << ptr->tri_v0 << ", " << ptr->tri_v1 << ", " << ptr->tri_v2 << std::endl;
         Triangle tri(pointSet[ptr->tri_v0], pointSet[ptr->tri_v1], pointSet[ptr->tri_v2]);
-//        std::cout << "tri: " << tri.v0 << ", " << tri.v1 << ", " << tri.v2 << std::endl;
         drawTriangle(tri, scn);
         ptr = ptr->next;
-//        std::string a = "test";
-//        char p = '0' + i;
-//        a += p;
-//        a += ".png";
-//        scn.imageWrite(a);
-//        i++;
     }
 }
-/*
-inline void TriangleTree::deleteSubtree(std::shared_ptr<TreeNode> ptr) {
-    if(ptr != nullptr) {
-        deleteSubtree(ptr->child0);
-        deleteSubtree(ptr->child1);
-        deleteSubtree(ptr->child2);
-        ptr.reset();
-        ptr = nullptr;
-    }
-    return;
-}
-*/
 #endif // DELAUNAYTRIANGULATION_H
