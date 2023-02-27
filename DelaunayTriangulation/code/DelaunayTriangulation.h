@@ -398,7 +398,6 @@ void TriangleList::addPoint(const std::vector<Vector2f>& pointSet, const int& in
         legalizeEdge(index, tmpInd0[1], tmpInd1[0], pointSet);
         legalizeEdge(index, tmpInd0[1], tmpInd1[1], pointSet);
     }
-
 }
 
 // Triangulation:
@@ -434,13 +433,19 @@ void TriangleList::triangulation(std::vector<Vector2f>& pointSet) {
         std::cout << "add point " << i << ": " << pointSet[i] << std::endl;
         addPoint(pointSet, i, tree, *this);
     }
-    
     std::shared_ptr<ListNode> ptr = head;
 
     // remove bounding triangle
     ///*
+    while(ptr->next != nullptr) {
+        std::cout << "tri_0 = " << ptr->tri_v0 << ", 1 = " << ptr->tri_v1 << ", 2 = " << ptr->tri_v2 << std::endl;
+        ptr = ptr->next;
+    }
+        std::cout << "tri_0 = " << ptr->tri_v0 << ", 1 = " << ptr->tri_v1 << ", 2 = " << ptr->tri_v2 << std::endl;
+    ptr = head;
     while(ptr != nullptr) {
         if(ptr->tri_v0 < 0 || ptr->tri_v1 < 0 || ptr->tri_v2 < 0) {
+        std::cout << "tri_0 = " << ptr->tri_v0 << ", 1 = " << ptr->tri_v1 << ", 2 = " << ptr->tri_v2 << std::endl;
             if(ptr == head) {
                 head = head->next;
                 head->pre = nullptr;
@@ -450,7 +455,8 @@ void TriangleList::triangulation(std::vector<Vector2f>& pointSet) {
             else {
                 std::shared_ptr<ListNode> tmp = ptr->next;
                 ptr->pre->next = ptr->next;
-                ptr->next->pre = ptr->pre;
+                if(ptr->next != nullptr)
+                    ptr->next->pre = ptr->pre;
                 ptr.reset();
                 ptr = tmp;
             }
@@ -458,7 +464,7 @@ void TriangleList::triangulation(std::vector<Vector2f>& pointSet) {
         else
             ptr = ptr->next;
     }
-
+    std::cout << "end this?" << std::endl;
     //*/
     // show bounding triangle
     /*
