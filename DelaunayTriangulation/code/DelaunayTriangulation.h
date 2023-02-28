@@ -11,10 +11,8 @@ struct ListNode;
 struct TreeNode{
     int tri_v0, tri_v1, tri_v2;
     std::shared_ptr<TreeNode> child0, child1, child2;
-    //TreeNode *child0, *child1, * child2;
     int childNum;
     std::shared_ptr<ListNode> listnode;
-    //ListNode *listnode;
     TreeNode(int _v0, int _v1, int _v2)
     : tri_v0(_v0), tri_v1(_v1), tri_v2(_v2), child0(nullptr), child1(nullptr), child2(nullptr), childNum(0) { }
 };
@@ -31,29 +29,15 @@ class TriangleTree
 {
 public:
     TriangleTree() {}
-    ~TriangleTree() {
-        //deleteSubtree(root);
-    }
-
-    //void deleteSubtree(std::shared_ptr<TreeNode>);
-
+    ~TriangleTree() {}
 public:
     std::shared_ptr<TreeNode> root;
-
 };
 
 class TriangleList
 {
 public:
-//    ~TriangleList() {
-//        std::shared_ptr<ListNode> ptr = head;
-//        while(ptr->next != nullptr) {
-//            ptr = ptr->next;
-//            delete ptr->pre;
-//        }
-//        delete ptr;
-//    }
-    void addPoint(const std::vector<Vector2f>&, const int&, TriangleTree&, TriangleList&);
+    void addPoint(const std::vector<Vector2f>&, const int&, TriangleTree&);
     void triangulation(std::vector<Vector2f>&);
     void drawTriangulation(const std::vector<Vector2f>& pointSet, Screen& scn);
     void linkEdge(std::shared_ptr<ListNode>);
@@ -284,7 +268,7 @@ inline void TriangleList::legalizeEdge(const int indr, const int ind0, const int
     legalizeEdge(indr, ind1, indl, pointSet);
 }
 
-void TriangleList::addPoint(const std::vector<Vector2f>& pointSet, const int& index, TriangleTree& tree, TriangleList& L){
+void TriangleList::addPoint(const std::vector<Vector2f>& pointSet, const int& index, TriangleTree& tree){
     Vector2f point = pointSet[index];
     std::vector<std::shared_ptr<ListNode>> ptrVec;
     findTriangle(index, tree.root, ptrVec, pointSet);
@@ -309,7 +293,7 @@ void TriangleList::addPoint(const std::vector<Vector2f>& pointSet, const int& in
         current_treenode->child1 = new_treenode1;
         current_treenode->child2 = new_treenode2;
         if(ptr->pre == nullptr) 
-            L.head = new_listnode0;
+            head = new_listnode0;
         else {
             ptr->pre->next = new_listnode0;
             new_listnode0->pre = ptr->pre;
@@ -372,13 +356,13 @@ void TriangleList::addPoint(const std::vector<Vector2f>& pointSet, const int& in
         current_treenode1->child0 = new_treenode10;
         current_treenode1->child1 = new_treenode11;
         if(ptr0->pre == nullptr)
-            L.head = new_listnode00;
+            head = new_listnode00;
         else {
             ptr0->pre->next = new_listnode00;
             new_listnode00->pre = ptr0->pre;
         }
         if(ptr1->pre == nullptr)
-            L.head = new_listnode10;
+            head = new_listnode10;
         else {
             ptr1->pre->next = new_listnode10;
             new_listnode10->pre = ptr1->pre;
@@ -431,7 +415,7 @@ void TriangleList::triangulation(std::vector<Vector2f>& pointSet) {
     // add every point from point set
     for(int i = 1; i < pointSet.size(); i++) {
         std::cout << "add point " << i << ": " << pointSet[i] << std::endl;
-        addPoint(pointSet, i, tree, *this);
+        addPoint(pointSet, i, tree);
     }
     std::shared_ptr<ListNode> ptr = head;
 

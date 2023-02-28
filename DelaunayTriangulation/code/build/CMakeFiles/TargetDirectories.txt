@@ -1,4 +1,0 @@
-/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/build/CMakeFiles/rebuild_cache.dir
-/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/build/CMakeFiles/edit_cache.dir
-/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/build/CMakeFiles/testVector.dir
-/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/code/build/CMakeFiles/DelaunayTriangulation.dir

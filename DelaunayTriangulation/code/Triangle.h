@@ -6,7 +6,7 @@
 class Triangle
 {
 public:
-    Vector2f v0, v1, v2; // vertices A, B, C, counter-cloc,wise order
+    Vector2f v0, v1, v2; // vertices A, B, C, counter-clockwise order
 
     Triangle(const Vector2f& _v0, const Vector2f& _v1, const Vector2f& _v2)
         : v0(_v0), v1(_v1), v2(_v2) { }

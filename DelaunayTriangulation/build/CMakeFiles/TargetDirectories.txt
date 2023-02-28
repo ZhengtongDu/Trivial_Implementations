@@ -1,3 +1,0 @@
-/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/build/CMakeFiles/rebuild_cache.dir
-/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/build/CMakeFiles/edit_cache.dir
-/home/zhengtong/Documents/Projects/programImplementions/DelaunayTriangulation/build/CMakeFiles/DelaunayTriangulation.dir
