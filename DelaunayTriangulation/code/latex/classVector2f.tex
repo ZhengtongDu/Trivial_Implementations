@@ -1,0 +1,297 @@
+\hypertarget{classVector2f}{}\doxysection{Vector2f Class Reference}
+\label{classVector2f}\index{Vector2f@{Vector2f}}
+
+
+{\ttfamily \#include $<$Vector.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVector2f_a3db9a868c58bc809e5e09a88d65a77ec}{Vector2f}} ()
+\item 
+\mbox{\hyperlink{classVector2f_ae3ff9026b0e1242471678e4f2ed8be0e}{Vector2f}} (float x, float y)
+\item 
+\mbox{\hyperlink{classVector2f}{Vector2f}} \mbox{\hyperlink{classVector2f_a7e43f36501701a1d5bf3165940cc3b6c}{operator+}} (const \mbox{\hyperlink{classVector2f}{Vector2f}} \&v) const
+\item 
+\mbox{\hyperlink{classVector2f}{Vector2f}} \mbox{\hyperlink{classVector2f_af5187c3a99ca7fb1681c65f5c7fc0367}{operator-\/}} (const \mbox{\hyperlink{classVector2f}{Vector2f}} \&v) const
+\item 
+\mbox{\hyperlink{classVector2f}{Vector2f}} \mbox{\hyperlink{classVector2f_ab505d08473dd8b6d252ba02cf286487a}{operator-\/}} () const
+\item 
+\mbox{\hyperlink{classVector2f}{Vector2f}} \mbox{\hyperlink{classVector2f_a49d8d403bb744924844f90c516e3508e}{operator$\ast$}} (const float \&r) const
+\item 
+\mbox{\hyperlink{classVector2f}{Vector2f}} \mbox{\hyperlink{classVector2f_ab876498cded2e7c8156f7d9156df587e}{operator/}} (const float \&r) const
+\item 
+\mbox{\hyperlink{classVector2f}{Vector2f}} \& \mbox{\hyperlink{classVector2f_a6a97a74e9bd5d13ce0ada7fed7500939}{operator+=}} (const \mbox{\hyperlink{classVector2f}{Vector2f}} \&v)
+\item 
+bool \mbox{\hyperlink{classVector2f_aadc0a86c6188c351a122df46f1885943}{operator==}} (const \mbox{\hyperlink{classVector2f}{Vector2f}} \&v) const
+\item 
+bool \mbox{\hyperlink{classVector2f_ae3c9c0dfdedb8d8b1600ba3a0a02188d}{operator!=}} (const \mbox{\hyperlink{classVector2f}{Vector2f}} \&v) const
+\item 
+float \mbox{\hyperlink{classVector2f_aaa3e436e5943e34ab2c1686b39779935}{norm}} () const
+\item 
+\mbox{\hyperlink{classVector2f}{Vector2f}} \mbox{\hyperlink{classVector2f_aab4cafab2acc94d17ace3638b04cc90c}{normalize}} () const
+\item 
+\mbox{\hyperlink{classVector2f}{Vector2f}} \mbox{\hyperlink{classVector2f_adecf4e1b721ccda0209cbcad135de656}{normalized}} ()
+\item 
+float \mbox{\hyperlink{classVector2f_a0f11fa996767d12598ac42459c1df7ac}{dot\+Product}} (const \mbox{\hyperlink{classVector2f}{Vector2f}} \&b) const
+\item 
+float \mbox{\hyperlink{classVector2f_a1bf8f59f84cb1a6199341d1c2c8fafc7}{cross\+Product}} (const \mbox{\hyperlink{classVector2f}{Vector2f}} \&b) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classVector2f_add58d2378e3a3abdb76cf0ac51c9acfc}\label{classVector2f_add58d2378e3a3abdb76cf0ac51c9acfc}} 
+float {\bfseries x}
+\item 
+\mbox{\Hypertarget{classVector2f_a14874a72597fd358b15f8ba34b999c4d}\label{classVector2f_a14874a72597fd358b15f8ba34b999c4d}} 
+float {\bfseries y}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVector2f}{Vector2f}} \mbox{\hyperlink{classVector2f_a92d77cd0b65fb809aa08437916445d50}{operator$\ast$}} (const float \&r, const \mbox{\hyperlink{classVector2f}{Vector2f}} \&v)
+\item 
+std\+::ostream \& \mbox{\hyperlink{classVector2f_a308486dd0e89d2c13bbcb181e779159d}{operator$<$$<$}} (std\+::ostream \&os, const \mbox{\hyperlink{classVector2f}{Vector2f}} \&v)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+2D vector class with basic operations. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classVector2f_a3db9a868c58bc809e5e09a88d65a77ec}\label{classVector2f_a3db9a868c58bc809e5e09a88d65a77ec}} 
+\index{Vector2f@{Vector2f}!Vector2f@{Vector2f}}
+\index{Vector2f@{Vector2f}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{Vector2f()}{Vector2f()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Vector2f\+::\+Vector2f (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Default constructor. Creates a zero vector. \mbox{\Hypertarget{classVector2f_ae3ff9026b0e1242471678e4f2ed8be0e}\label{classVector2f_ae3ff9026b0e1242471678e4f2ed8be0e}} 
+\index{Vector2f@{Vector2f}!Vector2f@{Vector2f}}
+\index{Vector2f@{Vector2f}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{Vector2f()}{Vector2f()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Vector2f\+::\+Vector2f (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Constructor that initializes the vector with the given values. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x component of the vector. \\
+\hline
+{\em y} & The y component of the vector. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classVector2f_a1bf8f59f84cb1a6199341d1c2c8fafc7}\label{classVector2f_a1bf8f59f84cb1a6199341d1c2c8fafc7}} 
+\index{Vector2f@{Vector2f}!crossProduct@{crossProduct}}
+\index{crossProduct@{crossProduct}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{crossProduct()}{crossProduct()}}
+{\footnotesize\ttfamily float Vector2f\+::cross\+Product (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{b }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Calculate the cross product with another vector. The return value is positive when the vector obtained by cross product points to the outer of the plane.
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & -\/ The vector to calculate the cross product with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The cross product. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVector2f_a0f11fa996767d12598ac42459c1df7ac}\label{classVector2f_a0f11fa996767d12598ac42459c1df7ac}} 
+\index{Vector2f@{Vector2f}!dotProduct@{dotProduct}}
+\index{dotProduct@{dotProduct}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{dotProduct()}{dotProduct()}}
+{\footnotesize\ttfamily float Vector2f\+::dot\+Product (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{b }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Calculate the dot product with another vector.
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & -\/ The vector to calculate the dot product with. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The dot product. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVector2f_aaa3e436e5943e34ab2c1686b39779935}\label{classVector2f_aaa3e436e5943e34ab2c1686b39779935}} 
+\index{Vector2f@{Vector2f}!norm@{norm}}
+\index{norm@{norm}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{norm()}{norm()}}
+{\footnotesize\ttfamily float Vector2f\+::norm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Calculate the norm (length) of the vector.
+
+\begin{DoxyReturn}{Returns}
+The norm (length) of the vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVector2f_aab4cafab2acc94d17ace3638b04cc90c}\label{classVector2f_aab4cafab2acc94d17ace3638b04cc90c}} 
+\index{Vector2f@{Vector2f}!normalize@{normalize}}
+\index{normalize@{normalize}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{normalize()}{normalize()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVector2f}{Vector2f}} Vector2f\+::normalize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Calculate the normalized vector.
+
+\begin{DoxyReturn}{Returns}
+The normalized vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVector2f_adecf4e1b721ccda0209cbcad135de656}\label{classVector2f_adecf4e1b721ccda0209cbcad135de656}} 
+\index{Vector2f@{Vector2f}!normalized@{normalized}}
+\index{normalized@{normalized}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{normalized()}{normalized()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVector2f}{Vector2f}} Vector2f\+::normalized (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Normalize the vector.
+
+\begin{DoxyReturn}{Returns}
+The normalized vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVector2f_ae3c9c0dfdedb8d8b1600ba3a0a02188d}\label{classVector2f_ae3c9c0dfdedb8d8b1600ba3a0a02188d}} 
+\index{Vector2f@{Vector2f}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily bool Vector2f\+::operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{v }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Operator overload for vector inequality comparison. 
+\begin{DoxyParams}{Parameters}
+{\em v} & The vector to be compared. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if this vector is not equal to the given vector, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVector2f_a49d8d403bb744924844f90c516e3508e}\label{classVector2f_a49d8d403bb744924844f90c516e3508e}} 
+\index{Vector2f@{Vector2f}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVector2f}{Vector2f}} Vector2f\+::operator$\ast$ (\begin{DoxyParamCaption}\item[{const float \&}]{r }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Operator overload for scalar multiplication. 
+\begin{DoxyParams}{Parameters}
+{\em r} & The scalar value to be multiplied. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new vector that is the product of this vector and the given scalar. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVector2f_a7e43f36501701a1d5bf3165940cc3b6c}\label{classVector2f_a7e43f36501701a1d5bf3165940cc3b6c}} 
+\index{Vector2f@{Vector2f}!operator+@{operator+}}
+\index{operator+@{operator+}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVector2f}{Vector2f}} Vector2f\+::operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{v }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Operator overload for vector addition. 
+\begin{DoxyParams}{Parameters}
+{\em v} & The vector to be added. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new vector that is the sum of this vector and the given vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVector2f_a6a97a74e9bd5d13ce0ada7fed7500939}\label{classVector2f_a6a97a74e9bd5d13ce0ada7fed7500939}} 
+\index{Vector2f@{Vector2f}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{operator+=()}{operator+=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVector2f}{Vector2f}} \& Vector2f\+::operator+= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Operator overload for vector addition and assignment. 
+\begin{DoxyParams}{Parameters}
+{\em v} & The vector to be added. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A reference to this vector after the addition operation. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVector2f_ab505d08473dd8b6d252ba02cf286487a}\label{classVector2f_ab505d08473dd8b6d252ba02cf286487a}} 
+\index{Vector2f@{Vector2f}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVector2f}{Vector2f}} Vector2f\+::operator-\/ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Operator overload for vector negation. \begin{DoxyReturn}{Returns}
+A new vector that is the negation of this vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVector2f_af5187c3a99ca7fb1681c65f5c7fc0367}\label{classVector2f_af5187c3a99ca7fb1681c65f5c7fc0367}} 
+\index{Vector2f@{Vector2f}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVector2f}{Vector2f}} Vector2f\+::operator-\/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{v }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Operator overload for vector subtraction. 
+\begin{DoxyParams}{Parameters}
+{\em v} & The vector to be subtracted. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new vector that is the difference between this vector and the given vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVector2f_ab876498cded2e7c8156f7d9156df587e}\label{classVector2f_ab876498cded2e7c8156f7d9156df587e}} 
+\index{Vector2f@{Vector2f}!operator/@{operator/}}
+\index{operator/@{operator/}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVector2f}{Vector2f}} Vector2f\+::operator/ (\begin{DoxyParamCaption}\item[{const float \&}]{r }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Operator overload for scalar division. 
+\begin{DoxyParams}{Parameters}
+{\em r} & The scalar value to be divided. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new vector that is the quotient of this vector and the given scalar. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVector2f_aadc0a86c6188c351a122df46f1885943}\label{classVector2f_aadc0a86c6188c351a122df46f1885943}} 
+\index{Vector2f@{Vector2f}!operator==@{operator==}}
+\index{operator==@{operator==}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool Vector2f\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{v }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Operator overload for vector equality comparison. 
+\begin{DoxyParams}{Parameters}
+{\em v} & The vector to be compared. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if this vector is equal to the given vector, false otherwise. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classVector2f_a92d77cd0b65fb809aa08437916445d50}\label{classVector2f_a92d77cd0b65fb809aa08437916445d50}} 
+\index{Vector2f@{Vector2f}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$}{operator*}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVector2f}{Vector2f}} operator$\ast$ (\begin{DoxyParamCaption}\item[{const float \&}]{r,  }\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Friend function for scalar multiplication. 
+\begin{DoxyParams}{Parameters}
+{\em r} & The scalar value to be multiplied. \\
+\hline
+{\em v} & The vector to be multiplied. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new vector that is the product of the given scalar and vector. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classVector2f_a308486dd0e89d2c13bbcb181e779159d}\label{classVector2f_a308486dd0e89d2c13bbcb181e779159d}} 
+\index{Vector2f@{Vector2f}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Vector2f@{Vector2f}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{v }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Overloading the \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} operator to output the vector in the format \char`\"{}(x, y)\char`\"{}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & -\/ The output stream. \\
+\hline
+{\em v} & -\/ The vector to output. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The output stream. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{Vector_8h}{Vector.\+h}}\end{DoxyCompactItemize}

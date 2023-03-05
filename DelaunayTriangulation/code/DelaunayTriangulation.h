@@ -406,7 +406,6 @@ void TriangleList::triangulation(std::vector<Vector2f>& pointSet) {
     shuffle(pointSet);
     // construct bounding triangle
     head.reset(new ListNode(-2, -1, 0));
-
     TriangleTree tree;
     tree.root.reset(new TreeNode(-2, -1, 0));
     linkEdge(head);
@@ -417,10 +416,10 @@ void TriangleList::triangulation(std::vector<Vector2f>& pointSet) {
         std::cout << "add point " << i << ": " << pointSet[i] << std::endl;
         addPoint(pointSet, i, tree);
     }
-    std::shared_ptr<ListNode> ptr = head;
 
-    // remove bounding triangle
+    // remove unreal triangles
     ///*
+    std::shared_ptr<ListNode> ptr = head;
     while(ptr != nullptr) {
         if(ptr->tri_v0 < 0 || ptr->tri_v1 < 0 || ptr->tri_v2 < 0) {
             if(ptr == head) {

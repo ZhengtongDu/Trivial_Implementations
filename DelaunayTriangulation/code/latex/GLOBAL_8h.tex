@@ -1,0 +1,57 @@
+\hypertarget{GLOBAL_8h}{}\doxysection{GLOBAL.\+h File Reference}
+\label{GLOBAL_8h}\index{GLOBAL.h@{GLOBAL.h}}
+
+
+This file contains global constants and inline functions used throughout the program.  
+
+
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$random$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$ctime$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{GLOBAL_8h_a97f058491fd0c2ae9751c8dd1f64cc59}{get\+Random}} (int start, int size=100)
+\begin{DoxyCompactList}\small\item\em Generates a random integer between start and start + size. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{GLOBAL_8h_aa08a577393243b86dfd2a97e61443673}\label{GLOBAL_8h_aa08a577393243b86dfd2a97e61443673}} 
+const float {\bfseries PI} = 3.\+1415926f
+\begin{DoxyCompactList}\small\item\em The constant value of pi. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{GLOBAL_8h_ab84b0a39a5bcd3e4bd1a2d19b015bde9}\label{GLOBAL_8h_ab84b0a39a5bcd3e4bd1a2d19b015bde9}} 
+const float {\bfseries EPSILON} = 0.\+0001
+\begin{DoxyCompactList}\small\item\em The epsilon value used for floating-\/point comparisons. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{GLOBAL_8h_a1a853b38221981739a2e51673793178c}\label{GLOBAL_8h_a1a853b38221981739a2e51673793178c}} 
+const float {\bfseries Infinity} = std\+::numeric\+\_\+limits$<$float$>$\+::max()
+\begin{DoxyCompactList}\small\item\em The maximum value of a float. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file contains global constants and inline functions used throughout the program. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{GLOBAL_8h_a97f058491fd0c2ae9751c8dd1f64cc59}\label{GLOBAL_8h_a97f058491fd0c2ae9751c8dd1f64cc59}} 
+\index{GLOBAL.h@{GLOBAL.h}!getRandom@{getRandom}}
+\index{getRandom@{getRandom}!GLOBAL.h@{GLOBAL.h}}
+\doxysubsubsection{\texorpdfstring{getRandom()}{getRandom()}}
+{\footnotesize\ttfamily int get\+Random (\begin{DoxyParamCaption}\item[{int}]{start,  }\item[{int}]{size = {\ttfamily 100} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Generates a random integer between start and start + size. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & The starting value of the range. \\
+\hline
+{\em size} & The size of the range. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A random integer between start and start + size. 
+\end{DoxyReturn}

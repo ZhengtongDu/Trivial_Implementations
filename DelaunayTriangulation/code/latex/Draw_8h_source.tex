@@ -1,0 +1,90 @@
+\hypertarget{Draw_8h_source}{}\doxysection{Draw.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DRAW\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DRAW\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Vector_8h}{Vector.h}}"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Triangle.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <opencv2/opencv.hpp>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classScreen}{Screen}}}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{classScreen_ae7576476fc6e6a6eaa66389fdc41fe72}{Screen}}()\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ height\ =\ 700,\ width\ =\ 700;}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ window\ =\ cv::Mat(height,\ width,\ CV\_8UC3,\ cv::Scalar(0));}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ cv::cvtColor(window,\ window,\ cv::COLOR\_BGR2RGB);}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ cv::namedWindow(\textcolor{stringliteral}{"{}Default\ Window"{}},\ cv::WINDOW\_AUTOSIZE);}
+\DoxyCodeLine{00023\ \ \ \ \ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{classScreen_ab04a311e9c239a17176d185c7c561337}{Screen}}(\textcolor{keywordtype}{int}\ \_size,\ std::string\ \_name\ =\ \textcolor{stringliteral}{"{}Default\ Window"{}})}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ :\ height(\_size),\ width(\_size),\ windowName(\_name)\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ window\ =\ cv::Mat(height,\ width,\ CV\_8UC3,\ cv::Scalar(0));}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ cv::cvtColor(window,\ window,\ cv::COLOR\_BGR2RGB);}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ cv::namedWindow(\_name,\ cv::WINDOW\_AUTOSIZE);}
+\DoxyCodeLine{00035\ \ \ \ \ \}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{classScreen_ae947d7f33b155218cf50c5dcba1abac1}{Screen}}(\textcolor{keywordtype}{int}\ \_height,\ \textcolor{keywordtype}{int}\ \_width,\ std::string\ \_name\ =\ \textcolor{stringliteral}{"{}Default\ Window"{}})}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ :\ height(\_width),\ width(\_height),\ windowName(\_name)\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ window\ =\ cv::Mat(height,\ width,\ CV\_8UC3,\ cv::Scalar(0));}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ cv::cvtColor(window,\ window,\ cv::COLOR\_BGR2RGB);}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ cv::namedWindow(\_name,\ cv::WINDOW\_AUTOSIZE);}
+\DoxyCodeLine{00048\ \ \ \ \ \}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classScreen_a28e348d56b7aeeb8c81263b8a2390b71}{screenShow}}()\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ key\ =\ -\/1;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(key\ !=\ 27)\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ cv::imshow(windowName,\ window);}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ key\ =\ cv::waitKey(0);}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00059\ \ \ \ \ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classScreen_a78e0d8ad4bc5612d40cac0884c66f08a}{imageWrite}}(std::string\ \_name\ =\ \textcolor{stringliteral}{"{}Default.png"{}})\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ cv::imwrite(\_name,\ window);}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{void}\ setPixel(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\&\ x,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\&\ y,\ cv::Point3f\ color\ =\ cv::Point3f(255,\ 255,\ 255))\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(x\ +\ 0.5\ >\ width\ ||\ x\ <\ 0)\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(y\ +\ 0.5\ >\ height\ ||\ y\ <\ 0)\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ window.at<cv::Vec3b>(height\ -\/\ y\ -\/\ 0.5,\ x\ +\ 0.5)[0]\ =\ color.x;}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ window.at<cv::Vec3b>(height\ -\/\ y\ -\/\ 0.5,\ x\ +\ 0.5)[1]\ =\ color.y;}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ window.at<cv::Vec3b>(height\ -\/\ y\ -\/\ 0.5,\ x\ +\ 0.5)[2]\ =\ color.z;}
+\DoxyCodeLine{00075\ \ \ \ \ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ cv::Mat\ window;}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{int}\ height,\ width;}
+\DoxyCodeLine{00079\ \ \ \ \ std::string\ windowName;}
+\DoxyCodeLine{00080\ \};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ cv::Point2f\ toPoint2f(\textcolor{keyword}{const}\ \mbox{\hyperlink{classVector2f}{Vector2f}}\&\ v)\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{return}\ cv::Point2f(v.x,\ v.y);}
+\DoxyCodeLine{00084\ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{keywordtype}{void}\ drawLine(\textcolor{keyword}{const}\ \mbox{\hyperlink{classVector2f}{Vector2f}}\&\ a,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classVector2f}{Vector2f}}\&\ b,\ \mbox{\hyperlink{classScreen}{Screen}}\&\ scn)\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{float}\ ax\ =\ a.x,\ ay\ =\ a.y,\ bx\ =\ b.x,\ by\ =\ b.y;}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{float}\ t\ =\ 0;\ t\ <=\ 1.0;\ t\ +=\ 0.001)}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ scn.setPixel(ax\ +\ t\ *\ (bx\ -\/\ ax),\ ay\ +\ t\ *\ (by\ -\/\ ay));}
+\DoxyCodeLine{00090\ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \textcolor{keywordtype}{void}\ drawPoint(\textcolor{keyword}{const}\ \mbox{\hyperlink{classVector2f}{Vector2f}}\&\ a,\ \mbox{\hyperlink{classScreen}{Screen}}\&\ scn,\ \textcolor{keywordtype}{int}\ radius\ =\ 3)\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{float}\ x\ =\ a.x,\ y\ =\ a.y;}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{float}\ t\ =\ 0;\ t\ <\ radius;\ t\ +=\ 0.1)\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{float}\ angle\ =\ 0;\ angle\ <\ 360;\ angle\ +=\ 0.01)}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ scn.setPixel(x\ +\ t\ *\ cos(angle\ *\ \mbox{\hyperlink{GLOBAL_8h_aa08a577393243b86dfd2a97e61443673}{PI}}\ /\ 180.0f),\ y\ +\ t\ *\ sin(angle\ *\ \mbox{\hyperlink{GLOBAL_8h_aa08a577393243b86dfd2a97e61443673}{PI}}\ /\ 180.0f));}
+\DoxyCodeLine{00097\ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{keywordtype}{void}\ drawTriangle(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTriangle}{Triangle}}\&\ tri,\ \mbox{\hyperlink{classScreen}{Screen}}\&\ scn)\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ drawPoint(tri.v0,\ scn);}
+\DoxyCodeLine{00102\ \ \ \ \ drawPoint(tri.v1,\ scn);}
+\DoxyCodeLine{00103\ \ \ \ \ drawPoint(tri.v2,\ scn);}
+\DoxyCodeLine{00104\ \ \ \ \ drawLine(tri.v0,\ tri.v1,\ scn);}
+\DoxyCodeLine{00105\ \ \ \ \ drawLine(tri.v1,\ tri.v2,\ scn);}
+\DoxyCodeLine{00106\ \ \ \ \ drawLine(tri.v2,\ tri.v0,\ scn);}
+\DoxyCodeLine{00107\ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DRAW\_H}}
+
+\end{DoxyCode}

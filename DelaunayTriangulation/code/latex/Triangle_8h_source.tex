@@ -1,0 +1,28 @@
+\hypertarget{Triangle_8h_source}{}\doxysection{Triangle.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ TRIANGLE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ TRIANGLE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Vector_8h}{Vector.h}}"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTriangle}{Triangle}}}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{classVector2f}{Vector2f}}\ v0,\ v1,\ v2;\ \textcolor{comment}{//\ vertices\ A,\ B,\ C,\ counter-\/clockwise\ order}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{classTriangle_a74918379353904987c0c00c3234c1c05}{Triangle}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classVector2f}{Vector2f}}\&\ \_v0,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classVector2f}{Vector2f}}\&\ \_v1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classVector2f}{Vector2f}}\&\ \_v2)}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ :\ v0(\_v0),\ v1(\_v1),\ v2(\_v2)\ \{\ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{friend}\ std::ostream\&\ \mbox{\hyperlink{classTriangle_ae719c53ca4d61d31ad172a07fa62cacc}{operator<<}}(std::ostream\&\ os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classTriangle}{Triangle}}\&\ tri)\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ os\ <<\ \textcolor{stringliteral}{"{}triangle:\ "{}}\ <<\ std::endl;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ os\ <<\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ point\ 0:\ "{}}\ <<\ tri.v0\ <<\ std::endl;\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ os\ <<\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ point\ 1:\ "{}}\ <<\ tri.v1\ <<\ std::endl;\ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ os\ <<\ \textcolor{stringliteral}{"{}\ \ \ \ \ \ point\ 2:\ "{}}\ <<\ tri.v2\ <<\ std::endl;\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ os;}
+\DoxyCodeLine{00039\ \ \ \ \ \}\ \ \ \ }
+\DoxyCodeLine{00040\ \};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TRIANGLE\_H}}
+
+\end{DoxyCode}

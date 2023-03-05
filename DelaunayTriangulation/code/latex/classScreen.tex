@@ -1,0 +1,109 @@
+\hypertarget{classScreen}{}\doxysection{Screen Class Reference}
+\label{classScreen}\index{Screen@{Screen}}
+
+
+A class that represents a 2D screen to draw on.  
+
+
+
+
+{\ttfamily \#include $<$Draw.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classScreen_ae7576476fc6e6a6eaa66389fdc41fe72}\label{classScreen_ae7576476fc6e6a6eaa66389fdc41fe72}} 
+{\bfseries Screen} ()
+\begin{DoxyCompactList}\small\item\em Constructs a default \mbox{\hyperlink{classScreen}{Screen}} object with size 700x700. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classScreen_ab04a311e9c239a17176d185c7c561337}{Screen}} (int \+\_\+size, std\+::string \+\_\+name=\char`\"{}Default Window\char`\"{})
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{classScreen}{Screen}} object with specified size and name. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classScreen_ae947d7f33b155218cf50c5dcba1abac1}{Screen}} (int \+\_\+height, int \+\_\+width, std\+::string \+\_\+name=\char`\"{}Default Window\char`\"{})
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{classScreen}{Screen}} object with specified height, width, and name. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classScreen_a28e348d56b7aeeb8c81263b8a2390b71}\label{classScreen_a28e348d56b7aeeb8c81263b8a2390b71}} 
+void {\bfseries screen\+Show} ()
+\begin{DoxyCompactList}\small\item\em Displays the screen window and waits for a key event. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classScreen_a78e0d8ad4bc5612d40cac0884c66f08a}{image\+Write}} (std\+::string \+\_\+name=\char`\"{}Default.\+png\char`\"{})
+\begin{DoxyCompactList}\small\item\em Writes the screen as an image with specified name. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classScreen_ad1841e845f83cd16c3457827dd402bb0}\label{classScreen_ad1841e845f83cd16c3457827dd402bb0}} 
+void {\bfseries set\+Pixel} (const float \&x, const float \&y, cv\+::\+Point3f color=cv\+::\+Point3f(255, 255, 255))
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classScreen_a9001c56a11f0714f2167823270b94d1d}\label{classScreen_a9001c56a11f0714f2167823270b94d1d}} 
+cv\+::\+Mat {\bfseries window}
+\item 
+\mbox{\Hypertarget{classScreen_a55405920693276db8fbdbf3a903b8d2f}\label{classScreen_a55405920693276db8fbdbf3a903b8d2f}} 
+int {\bfseries height}
+\item 
+\mbox{\Hypertarget{classScreen_a49be8f8ccf7ed7a3151a761495c0ce21}\label{classScreen_a49be8f8ccf7ed7a3151a761495c0ce21}} 
+int {\bfseries width}
+\item 
+\mbox{\Hypertarget{classScreen_a89b343bec1afc5352bf85c76e8c54c5c}\label{classScreen_a89b343bec1afc5352bf85c76e8c54c5c}} 
+std\+::string {\bfseries window\+Name}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class that represents a 2D screen to draw on. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classScreen_ab04a311e9c239a17176d185c7c561337}\label{classScreen_ab04a311e9c239a17176d185c7c561337}} 
+\index{Screen@{Screen}!Screen@{Screen}}
+\index{Screen@{Screen}!Screen@{Screen}}
+\doxysubsubsection{\texorpdfstring{Screen()}{Screen()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Screen\+::\+Screen (\begin{DoxyParamCaption}\item[{int}]{\+\_\+size,  }\item[{std\+::string}]{\+\_\+name = {\ttfamily \char`\"{}Default~Window\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a \mbox{\hyperlink{classScreen}{Screen}} object with specified size and name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+size} & The size of the screen (both height and width) \\
+\hline
+{\em \+\_\+name} & The name of the screen window \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classScreen_ae947d7f33b155218cf50c5dcba1abac1}\label{classScreen_ae947d7f33b155218cf50c5dcba1abac1}} 
+\index{Screen@{Screen}!Screen@{Screen}}
+\index{Screen@{Screen}!Screen@{Screen}}
+\doxysubsubsection{\texorpdfstring{Screen()}{Screen()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Screen\+::\+Screen (\begin{DoxyParamCaption}\item[{int}]{\+\_\+height,  }\item[{int}]{\+\_\+width,  }\item[{std\+::string}]{\+\_\+name = {\ttfamily \char`\"{}Default~Window\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a \mbox{\hyperlink{classScreen}{Screen}} object with specified height, width, and name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+height} & The height of the screen \\
+\hline
+{\em \+\_\+width} & The width of the screen \\
+\hline
+{\em \+\_\+name} & The name of the screen window \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classScreen_a78e0d8ad4bc5612d40cac0884c66f08a}\label{classScreen_a78e0d8ad4bc5612d40cac0884c66f08a}} 
+\index{Screen@{Screen}!imageWrite@{imageWrite}}
+\index{imageWrite@{imageWrite}!Screen@{Screen}}
+\doxysubsubsection{\texorpdfstring{imageWrite()}{imageWrite()}}
+{\footnotesize\ttfamily void Screen\+::image\+Write (\begin{DoxyParamCaption}\item[{std\+::string}]{\+\_\+name = {\ttfamily \char`\"{}Default.png\char`\"{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Writes the screen as an image with specified name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+name} & The name of the image file to write \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Draw.\+h\end{DoxyCompactItemize}

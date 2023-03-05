@@ -1,0 +1,23 @@
+\hypertarget{GLOBAL_8h_source}{}\doxysection{GLOBAL.\+h}
+\mbox{\hyperlink{GLOBAL_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ GLOBAL\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ GLOBAL\_H}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <random>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <cstdlib>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <ctime>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{GLOBAL_8h_aa08a577393243b86dfd2a97e61443673}{PI}}\ =\ 3.1415926f;}
+\DoxyCodeLine{00024\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{GLOBAL_8h_ab84b0a39a5bcd3e4bd1a2d19b015bde9}{EPSILON}}\ =\ 0.0001;}
+\DoxyCodeLine{00029\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{GLOBAL_8h_a1a853b38221981739a2e51673793178c}{Infinity}}\ =\ std::numeric\_limits<float>::max();}
+\DoxyCodeLine{00037\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{GLOBAL_8h_a97f058491fd0c2ae9751c8dd1f64cc59}{getRandom}}(\textcolor{keywordtype}{int}\ start,\ \textcolor{keywordtype}{int}\ size\ =\ 100)\ \{}
+\DoxyCodeLine{00038\ \textcolor{keywordflow}{if}(size\ <\ 0)\ size\ =\ 100;}
+\DoxyCodeLine{00039\ \textcolor{keywordflow}{return}\ start\ +\ rand()\ \%\ size;}
+\DoxyCodeLine{00040\ \}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ GLOBAL\_H}}
+
+\end{DoxyCode}

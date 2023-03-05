@@ -3,13 +3,19 @@
 
 #include "Vector.h"
 #include "Triangle.h"
+#include "GLOBAL.h"
 #include <opencv2/opencv.hpp>
 #include <string>
 
+/**
+ * @brief A class that represents a 2D screen to draw on
+ */
 class Screen
 {
 public:
-
+    /**
+     * @brief Constructs a default Screen object with size 700x700
+     */
     Screen() {
         height = 700, width = 700;
         window = cv::Mat(height, width, CV_8UC3, cv::Scalar(0));
@@ -17,6 +23,11 @@ public:
         cv::namedWindow("Default Window", cv::WINDOW_AUTOSIZE);
     }
 
+    /**
+     * @brief Constructs a Screen object with specified size and name
+     * @param _size The size of the screen (both height and width)
+     * @param _name The name of the screen window
+     */
     Screen(int _size, std::string _name = "Default Window")
         : height(_size), width(_size), windowName(_name) {
         window = cv::Mat(height, width, CV_8UC3, cv::Scalar(0));
@@ -24,6 +35,12 @@ public:
         cv::namedWindow(_name, cv::WINDOW_AUTOSIZE);
     }
 
+    /**
+     * @brief Constructs a Screen object with specified height, width, and name
+     * @param _height The height of the screen
+     * @param _width The width of the screen
+     * @param _name The name of the screen window
+     */
     Screen(int _height, int _width, std::string _name = "Default Window")
         : height(_width), width(_height), windowName(_name) {
         window = cv::Mat(height, width, CV_8UC3, cv::Scalar(0));
@@ -31,6 +48,9 @@ public:
         cv::namedWindow(_name, cv::WINDOW_AUTOSIZE);
     }
 
+    /**
+     * @brief Displays the screen window and waits for a key event
+     */
     void screenShow() {
         int key = -1;
         while(key != 27) {
@@ -39,6 +59,10 @@ public:
         }
     }
 
+    /**
+     * @brief Writes the screen as an image with specified name
+     * @param _name The name of the image file to write
+     */
     void imageWrite(std::string _name = "Default.png") {
         cv::imwrite(_name, window);
     }

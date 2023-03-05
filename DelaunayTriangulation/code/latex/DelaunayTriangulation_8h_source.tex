@@ -1,0 +1,478 @@
+\hypertarget{DelaunayTriangulation_8h_source}{}\doxysection{Delaunay\+Triangulation.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ DELAUNAYTRIANGULATION\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ DELAUNAYTRIANGULATION\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Triangle.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Draw.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structTreeNode}{TreeNode}};}
+\DoxyCodeLine{00009\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structListNode}{ListNode}};}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structTreeNode}{TreeNode}}\{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{int}\ tri\_v0,\ tri\_v1,\ tri\_v2;}
+\DoxyCodeLine{00013\ \ \ \ \ std::shared\_ptr<TreeNode>\ child0,\ child1,\ child2;}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{int}\ childNum;}
+\DoxyCodeLine{00015\ \ \ \ \ std::shared\_ptr<ListNode>\ listnode;}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{structTreeNode}{TreeNode}}(\textcolor{keywordtype}{int}\ \_v0,\ \textcolor{keywordtype}{int}\ \_v1,\ \textcolor{keywordtype}{int}\ \_v2)}
+\DoxyCodeLine{00017\ \ \ \ \ :\ tri\_v0(\_v0),\ tri\_v1(\_v1),\ tri\_v2(\_v2),\ child0(\textcolor{keyword}{nullptr}),\ child1(\textcolor{keyword}{nullptr}),\ child2(\textcolor{keyword}{nullptr}),\ childNum(0)\ \{\ \}}
+\DoxyCodeLine{00018\ \};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structListNode}{ListNode}}\{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ tri\_v0,\ tri\_v1,\ tri\_v2;}
+\DoxyCodeLine{00022\ \ \ \ \ std::shared\_ptr<ListNode>\ pre,\ next;}
+\DoxyCodeLine{00023\ \ \ \ \ std::shared\_ptr<TreeNode>\ treenode;}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{structListNode}{ListNode}}(\textcolor{keywordtype}{int}\ \_v0,\ \textcolor{keywordtype}{int}\ \_v1,\ \textcolor{keywordtype}{int}\ \_v2)}
+\DoxyCodeLine{00025\ \ \ \ \ :\ tri\_v0(\_v0),\ tri\_v1(\_v1),\ tri\_v2(\_v2),\ pre(\textcolor{keyword}{nullptr}),\ next(\textcolor{keyword}{nullptr})\ \{\ \}}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTriangleTree}{TriangleTree}}}
+\DoxyCodeLine{00029\ \{}
+\DoxyCodeLine{00030\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{classTriangleTree}{TriangleTree}}()\ \{\}}
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{classTriangleTree}{\string~TriangleTree}}()\ \{\}}
+\DoxyCodeLine{00033\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00034\ \ \ \ \ std::shared\_ptr<TreeNode>\ root;}
+\DoxyCodeLine{00035\ \};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTriangleList}{TriangleList}}}
+\DoxyCodeLine{00038\ \{}
+\DoxyCodeLine{00039\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ addPoint(\textcolor{keyword}{const}\ std::vector<Vector2f>\&,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\&,\ \mbox{\hyperlink{classTriangleTree}{TriangleTree}}\&);}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTriangleList_a9a39b7adae7a1aad29e0ad73bd73b2ad}{triangulation}}(std::vector<Vector2f>\&);}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ drawTriangulation(\textcolor{keyword}{const}\ std::vector<Vector2f>\&\ pointSet,\ \mbox{\hyperlink{classScreen}{Screen}}\&\ scn);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ linkEdge(std::shared\_ptr<ListNode>);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ unlinkEdge(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int},\ std::shared\_ptr<ListNode>);}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ unlinkEdge(std::shared\_ptr<ListNode>\ ptr);}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ legalizeEdge(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int},\ \textcolor{keyword}{const}\ std::vector<Vector2f>\&);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ printEdgeTable();}
+\DoxyCodeLine{00048\ \ \ \ \ std::shared\_ptr<ListNode>\ head;}
+\DoxyCodeLine{00049\ \ \ \ \ std::vector<std::vector<std::vector<std::shared\_ptr<ListNode>>>>\ edgeTable;}
+\DoxyCodeLine{00050\ \};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00053\ \textcolor{comment}{//\ End\ Class\ Declaration}}
+\DoxyCodeLine{00055\ \textcolor{comment}{}}
+\DoxyCodeLine{00057\ \textcolor{comment}{//\ Function\ Definition}}
+\DoxyCodeLine{00059\ \textcolor{comment}{}}
+\DoxyCodeLine{00060\ \textcolor{keywordtype}{void}\ crossLink(std::shared\_ptr<ListNode>\ lnode,\ std::shared\_ptr<TreeNode>\ tnode)\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ lnode-\/>treenode\ =\ tnode;}
+\DoxyCodeLine{00062\ \ \ \ \ tnode-\/>listnode\ =\ lnode;}
+\DoxyCodeLine{00063\ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{keywordtype}{void}\ TriangleList::linkEdge(std::shared\_ptr<ListNode>\ ptr)\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{int}\ ind0\ =\ ptr-\/>tri\_v0\ +\ 2,\ ind1\ =\ ptr-\/>tri\_v1\ +\ 2,\ ind2\ =\ ptr-\/>tri\_v2\ +\ 2;}
+\DoxyCodeLine{00067\ \ \ \ \ edgeTable[ind0][ind1].push\_back(ptr);}
+\DoxyCodeLine{00068\ \ \ \ \ edgeTable[ind1][ind0].push\_back(ptr);}
+\DoxyCodeLine{00069\ \ \ \ \ edgeTable[ind0][ind2].push\_back(ptr);}
+\DoxyCodeLine{00070\ \ \ \ \ edgeTable[ind2][ind0].push\_back(ptr);}
+\DoxyCodeLine{00071\ \ \ \ \ edgeTable[ind1][ind2].push\_back(ptr);}
+\DoxyCodeLine{00072\ \ \ \ \ edgeTable[ind2][ind1].push\_back(ptr);}
+\DoxyCodeLine{00073\ \}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{keywordtype}{void}\ TriangleList::unlinkEdge(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ ind0,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ ind1,\ std::shared\_ptr<ListNode>\ ptr)\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0;}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{for}(;i\ <\ edgeTable[ind0\ +\ 2][ind1\ +\ 2].size();\ i++)}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(edgeTable[ind0\ +\ 2][ind1\ +\ 2][i]\ ==\ ptr)\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00079\ \ \ \ \ edgeTable[ind0\ +\ 2][ind1\ +\ 2].erase(edgeTable[ind0\ +\ 2][ind1\ +\ 2].begin()\ +\ i);}
+\DoxyCodeLine{00080\ \ \ \ \ edgeTable[ind1\ +\ 2][ind0\ +\ 2].erase(edgeTable[ind1\ +\ 2][ind0\ +\ 2].begin()\ +\ i);}
+\DoxyCodeLine{00081\ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \textcolor{keywordtype}{void}\ TriangleList::unlinkEdge(std::shared\_ptr<ListNode>\ ptr)\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ unlinkEdge(ptr-\/>tri\_v0,\ ptr-\/>tri\_v1,\ ptr);}
+\DoxyCodeLine{00085\ \ \ \ \ unlinkEdge(ptr-\/>tri\_v1,\ ptr-\/>tri\_v2,\ ptr);}
+\DoxyCodeLine{00086\ \ \ \ \ unlinkEdge(ptr-\/>tri\_v2,\ ptr-\/>tri\_v0,\ ptr);}
+\DoxyCodeLine{00087\ \}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \textcolor{keywordtype}{void}\ printTree(std::shared\_ptr<TreeNode>\ ptr)\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordflow}{if}(ptr\ ==\ \textcolor{keyword}{nullptr})\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00091\ \ \ \ \ std::cout\ <<\ ptr-\/>tri\_v0\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ ptr-\/>tri\_v1\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ ptr-\/>tri\_v2\ <<\ std::endl;}
+\DoxyCodeLine{00092\ \ \ \ \ printTree(ptr-\/>child0);}
+\DoxyCodeLine{00093\ \ \ \ \ printTree(ptr-\/>child1);}
+\DoxyCodeLine{00094\ \ \ \ \ printTree(ptr-\/>child2);}
+\DoxyCodeLine{00095\ \}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \textcolor{keywordtype}{bool}\ isLeft(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ indr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ ind1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ ind2,\ \textcolor{keyword}{const}\ std::vector<Vector2f>\&\ pointSet)\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{classVector2f}{Vector2f}}\ v1,\ v2,\ point;}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordflow}{if}(ind1\ >=\ 0)}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ v1\ =\ pointSet[ind1];}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{if}(ind2\ >=\ 0)}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ v2\ =\ pointSet[ind2];}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{if}(indr\ >=\ 0)}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ point\ =\ pointSet[indr];}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{if}(indr\ ==\ -\/1)\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind2\ ==\ -\/2)\ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind1\ ==\ -\/2)\ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((v1.y\ >\ v2.y)\ ||\ (v1.y\ ==\ v2.y\ \&\&\ v1.x\ >\ v2.x))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00110\ \ \ \ \ \}}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordflow}{if}(indr\ ==\ -\/2)\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind2\ ==\ -\/1)\ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind1\ ==\ -\/1)\ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((v1.y\ >\ v2.y)\ ||\ (v1.y\ ==\ v2.y\ \&\&\ v1.x\ >\ v2.x))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00116\ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordflow}{if}(ind1\ <\ 0\ ||\ ind2\ <\ 0)\ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind1\ <\ 0\ \&\&\ ind2\ <\ 0)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ point\ lies\ in\ the\ left\ of\ edge(v1,\ v2);\ \ }}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind1\ ==\ -\/1)\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((v2.y\ >\ point.y)\ ||\ (v2.y\ ==\ point.y\ \&\&\ v2.x\ >\ point.x))}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind2\ ==\ -\/1)\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((v1.y\ <\ point.y)\ ||\ (v1.y\ ==\ point.y\ \&\&\ v1.x\ <\ point.x))}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind1\ ==\ -\/2)\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((v2.y\ <\ point.y)\ ||\ (v2.y\ ==\ point.y\ \&\&\ v2.x\ <\ point.x))}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind2\ ==\ -\/2)\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((v1.y\ >\ point.y)\ ||\ (v1.y\ ==\ point.y\ \&\&\ v1.x\ >\ point.x))}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00135\ \ \ \ \ \}}
+\DoxyCodeLine{00136\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classVector2f}{Vector2f}}\ e1\ =\ v2\ -\/\ v1,\ e2\ =\ point\ -\/\ v1;}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{Vector_8h_a341961ee50c8d5be48696ddf386271e8}{crossProduct}}(e1,\ e2)\ >=\ -\/\mbox{\hyperlink{GLOBAL_8h_ab84b0a39a5bcd3e4bd1a2d19b015bde9}{EPSILON}})\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00139\ \ \ \ \ \}}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ point\ lies\ in\ the\ right\ of\ edge(v1,\ v2);}}
+\DoxyCodeLine{00141\ \}}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \textcolor{keywordtype}{bool}\ inTriangle(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ indr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ ind0,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ ind1,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ ind2,\ \textcolor{keyword}{const}\ std::vector<Vector2f>\&\ pointSet)\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordflow}{if}(isLeft(indr,\ ind0,\ ind1,\ pointSet)\ ==\ \textcolor{keyword}{false}\ ||\ isLeft(indr,\ ind1,\ ind2,\ pointSet)\ ==\ \textcolor{keyword}{false}\ ||\ isLeft(indr,\ ind2,\ ind0,\ pointSet)\ ==\ \textcolor{keyword}{false})}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00147\ \}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \textcolor{keywordtype}{void}\ findTriangle(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ indr,\ \textcolor{keyword}{const}\ std::shared\_ptr<TreeNode>\ ptr,\ std::vector<std::shared\_ptr<ListNode>>\&\ ptrVec,\ \textcolor{keyword}{const}\ std::vector<Vector2f>\&\ pointSet)\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordflow}{if}(ptr\ ==\ \textcolor{keyword}{nullptr})\ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{if}(inTriangle(indr,\ ptr-\/>tri\_v0,\ ptr-\/>tri\_v1,\ ptr-\/>tri\_v2,\ pointSet))\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptr-\/>child0\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ ptrVec.size();\ i++)}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptrVec[i]\ ==\ ptr-\/>listnode)\ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ ptrVec.push\_back(ptr-\/>listnode);}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ findTriangle(indr,\ ptr-\/>child0,\ ptrVec,\ pointSet);}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ findTriangle(indr,\ ptr-\/>child1,\ ptrVec,\ pointSet);}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ findTriangle(indr,\ ptr-\/>child2,\ ptrVec,\ pointSet);}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00163\ \ \ \ \ \}}
+\DoxyCodeLine{00164\ \ \ \ \ return\ ;}
+\DoxyCodeLine{00165\ \}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \textcolor{keywordtype}{void}\ shuffle(std::vector<Vector2f>\&\ pointSet)\ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ pointSet.size()\ *\ 2;\ i++)\ }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ std::swap(pointSet[1],\ pointSet[\mbox{\hyperlink{GLOBAL_8h_a97f058491fd0c2ae9751c8dd1f64cc59}{getRandom}}(2,\ pointSet.size()\ -\/\ 2)]);}
+\DoxyCodeLine{00170\ \}}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ TriangleList::printEdgeTable()\ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ edgeTable.size();\ i++)}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ j\ =\ i\ +\ 1;\ j\ <\ edgeTable[i].size();\ j++)}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ edgeTable[i][j].size();\ k++)\ \{}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}i:\ "{}}\ <<\ i\ -\/\ 2\ <<\ \textcolor{stringliteral}{"{},\ j:\ "{}}\ <<\ j\ -\/\ 2\ <<\ \textcolor{stringliteral}{"{},\ k:\ "{}}\ <<\ k\ +\ 1\ <<\ \textcolor{stringliteral}{"{},\ size\ =\ "{}}\ <<\ edgeTable[i][j].size()\ <<\ \textcolor{stringliteral}{"{},\ value:\ "{}};}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ edgeTable[i][j][k]-\/>tri\_v0\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ edgeTable[i][j][k]-\/>tri\_v1\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ edgeTable[i][j][k]-\/>tri\_v2\ <<\ std::endl;}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00179\ \}}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \textcolor{keywordtype}{bool}\ isConvex(\textcolor{keywordtype}{int}\ indr,\ \textcolor{keywordtype}{int}\ ind0,\ \textcolor{keywordtype}{int}\ ind1,\ \textcolor{keywordtype}{int}\ indl,\ \textcolor{keyword}{const}\ std::vector<Vector2f>\&\ pointSet)\{}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordtype}{bool}\ flag0,\ flag1;}
+\DoxyCodeLine{00183\ \ \ \ \ flag0\ =\ isLeft(ind0,\ indr,\ indl,\ pointSet);}
+\DoxyCodeLine{00184\ \ \ \ \ flag1\ =\ isLeft(ind1,\ indr,\ indl,\ pointSet);}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordflow}{return}\ flag0\ ==\ flag1;}
+\DoxyCodeLine{00186\ \}}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \textcolor{keywordtype}{bool}\ isLegal(\textcolor{keywordtype}{int}\ indr,\ \textcolor{keywordtype}{int}\ ind0,\ \textcolor{keywordtype}{int}\ ind1,\ \textcolor{keywordtype}{int}\ indl,\ \textcolor{keyword}{const}\ std::vector<Vector2f>\&\ pointSet)\ \{}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordflow}{if}(ind0\ <=\ 0\ \&\&\ ind1\ <=\ 0)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00190\ \ \ \ \ \textcolor{comment}{//\ is\ convex\ quadrilateral}}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordtype}{bool}\ flag0,\ flag1;}
+\DoxyCodeLine{00192\ \ \ \ \ flag0\ =\ isLeft(ind0,\ indr,\ indl,\ pointSet);}
+\DoxyCodeLine{00193\ \ \ \ \ flag1\ =\ isLeft(ind1,\ indr,\ indl,\ pointSet);}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keywordflow}{if}(flag0\ ==\ flag1)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordflow}{if}(indr\ <\ 0\ ||\ ind0\ <\ 0\ ||\ ind1\ <\ 0\ ||\ indl\ <\ 0)\ \{}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(indr\ >=\ 0\ \&\&\ indl\ >=\ 0)\ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind0\ >=\ 0\ \&\&\ ind1\ >=\ 0)\ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00200\ \ \ \ \ \}}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \ \mbox{\hyperlink{classVector2f}{Vector2f}}\ pr\ =\ pointSet[indr],\ p0\ =\ pointSet[ind0],\ p1\ =\ pointSet[ind1],\ pl\ =\ pointSet[indl];}
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordtype}{float}\ angleCosine0\ =\ \mbox{\hyperlink{Vector_8h_a5affc94d54e4c9a93c262d49181daaa2}{dotProduct}}(p0\ -\/\ pr,\ p1\ -\/\ pr)\ /\ ((p0\ -\/\ pr).norm()\ *\ (p1\ -\/\ pr).norm());}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordtype}{float}\ angleCosine1\ =\ \mbox{\hyperlink{Vector_8h_a5affc94d54e4c9a93c262d49181daaa2}{dotProduct}}(p0\ -\/\ pl,\ p1\ -\/\ pl)\ /\ ((p0\ -\/\ pl).norm()\ *\ (p1\ -\/\ pl).norm());}
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordflow}{if}(-\/angleCosine0\ >\ angleCosine1)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00207\ \}}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ TriangleList::legalizeEdge(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ indr,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ ind0,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ ind1,\ \textcolor{keyword}{const}\ std::vector<Vector2f>\&\ pointSet)\ \{}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordflow}{if}(edgeTable[ind0\ +\ 2][ind1\ +\ 2].size()\ <\ 2)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00211\ \ \ \ \ std::shared\_ptr<ListNode>\ ptr0\ =\ edgeTable[ind0\ +\ 2][ind1\ +\ 2][0],\ ptr1\ =\ edgeTable[ind0\ +\ 2][ind1\ +\ 2][1];}
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordtype}{int}\ indl;}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordflow}{if}(indr\ !=\ ptr0-\/>tri\_v0\ \&\&\ indr\ !=\ ptr0-\/>tri\_v1\ \&\&\ indr\ !=\ ptr0-\/>tri\_v2)}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ std::swap(ptr0,\ ptr1);\ \textcolor{comment}{//\ indr\ is\ in\ ptr0-\/>tri}}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordflow}{if}(ptr1-\/>tri\_v0\ !=\ ind0\ \&\&\ ptr1-\/>tri\_v0\ !=\ ind1)\ \ \ \ indl\ =\ ptr1-\/>tri\_v0;}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(ptr1-\/>tri\_v1\ !=\ ind0\ \&\&\ ptr1-\/>tri\_v1\ !=\ ind1)\ \ \ \ indl\ =\ ptr1-\/>tri\_v1;}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordflow}{else}\ \ \ \ indl\ =\ ptr1-\/>tri\_v2;}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordflow}{if}(isLegal(indr,\ ind0,\ ind1,\ indl,\ pointSet))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ std::shared\_ptr<TreeNode>\ current\_treenode0\ =\ ptr0-\/>treenode,\ current\_treenode1\ =\ ptr1-\/>treenode;}
+\DoxyCodeLine{00221\ \ \ \ \ std::shared\_ptr<ListNode>\ new\_listnode0,\ new\_listnode1;}
+\DoxyCodeLine{00222\ \ \ \ \ std::shared\_ptr<TreeNode>\ new\_treenode0,\ new\_treenode1;}
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keywordflow}{if}(isLeft(ind1,\ indr,\ indl,\ pointSet))\ \{}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ new\_listnode0.reset(\textcolor{keyword}{new}\ \mbox{\hyperlink{structListNode}{ListNode}}(indr,\ indl,\ ind1));}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ new\_listnode1.reset(\textcolor{keyword}{new}\ \mbox{\hyperlink{structListNode}{ListNode}}(indl,\ indr,\ ind0));}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ new\_treenode0.reset(\textcolor{keyword}{new}\ \mbox{\hyperlink{structTreeNode}{TreeNode}}(indr,\ indl,\ ind1));}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ new\_treenode1.reset(\textcolor{keyword}{new}\ \mbox{\hyperlink{structTreeNode}{TreeNode}}(indl,\ indr,\ ind0));}
+\DoxyCodeLine{00228\ \ \ \ \ \}}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ new\_listnode0.reset(\textcolor{keyword}{new}\ \mbox{\hyperlink{structListNode}{ListNode}}(indr,\ indl,\ ind0));}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ new\_listnode1.reset(\textcolor{keyword}{new}\ \mbox{\hyperlink{structListNode}{ListNode}}(indl,\ indr,\ ind1));}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ new\_treenode0.reset(\textcolor{keyword}{new}\ \mbox{\hyperlink{structTreeNode}{TreeNode}}(indr,\ indl,\ ind0));}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ new\_treenode1.reset(\textcolor{keyword}{new}\ \mbox{\hyperlink{structTreeNode}{TreeNode}}(indl,\ indr,\ ind1));}
+\DoxyCodeLine{00234\ \ \ \ \ \}}
+\DoxyCodeLine{00235\ \ \ \ \ crossLink(new\_listnode0,\ new\_treenode0);}
+\DoxyCodeLine{00236\ \ \ \ \ crossLink(new\_listnode1,\ new\_treenode1);}
+\DoxyCodeLine{00237\ \ \ \ \ linkEdge(new\_listnode0);}
+\DoxyCodeLine{00238\ \ \ \ \ linkEdge(new\_listnode1);}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \ \ \ \ current\_treenode0-\/>childNum\ =\ 2,\ current\_treenode1-\/>childNum\ =\ 2;}
+\DoxyCodeLine{00241\ \ \ \ \ current\_treenode0-\/>child0\ =\ new\_treenode0,\ current\_treenode0-\/>child1\ =\ new\_treenode1;}
+\DoxyCodeLine{00242\ \ \ \ \ current\_treenode1-\/>child0\ =\ new\_treenode0,\ current\_treenode1-\/>child1\ =\ new\_treenode1;}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ \ \ \ \ \textcolor{keywordflow}{if}(ptr0-\/>pre\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ head\ =\ new\_listnode0;}
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ ptr0-\/>pre-\/>next\ =\ new\_listnode0;}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ new\_listnode0-\/>pre\ =\ ptr0-\/>pre;}
+\DoxyCodeLine{00249\ \ \ \ \ \}}
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordflow}{if}(ptr1-\/>pre\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ head\ =\ new\_listnode1;}
+\DoxyCodeLine{00252\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ ptr1-\/>pre-\/>next\ =\ new\_listnode1;}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ new\_listnode1-\/>pre\ =\ ptr1-\/>pre;}
+\DoxyCodeLine{00255\ \ \ \ \ \}}
+\DoxyCodeLine{00256\ \ \ \ \ new\_listnode0-\/>next\ =\ ptr0-\/>next;}
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keywordflow}{if}(new\_listnode0-\/>next\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ new\_listnode0-\/>next-\/>pre\ =\ new\_listnode0;}
+\DoxyCodeLine{00259\ \ \ \ \ new\_listnode1-\/>next\ =\ ptr1-\/>next;}
+\DoxyCodeLine{00260\ \ \ \ \ \textcolor{keywordflow}{if}(new\_listnode1-\/>next\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ new\_listnode1-\/>next-\/>pre\ =\ new\_listnode1;}
+\DoxyCodeLine{00262\ \ \ \ \ unlinkEdge(ptr0);}
+\DoxyCodeLine{00263\ \ \ \ \ unlinkEdge(ptr1);}
+\DoxyCodeLine{00264\ \ \ \ \ std::shared\_ptr<ListNode>\ ptr\ =\ head;}
+\DoxyCodeLine{00265\ \ \ \ \ ptr0.reset();}
+\DoxyCodeLine{00266\ \ \ \ \ ptr1.reset();}
+\DoxyCodeLine{00267\ \ \ \ \ legalizeEdge(indr,\ ind0,\ indl,\ pointSet);}
+\DoxyCodeLine{00268\ \ \ \ \ legalizeEdge(indr,\ ind1,\ indl,\ pointSet);}
+\DoxyCodeLine{00269\ \}}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00271\ \textcolor{keywordtype}{void}\ TriangleList::addPoint(\textcolor{keyword}{const}\ std::vector<Vector2f>\&\ pointSet,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\&\ index,\ \mbox{\hyperlink{classTriangleTree}{TriangleTree}}\&\ tree)\{}
+\DoxyCodeLine{00272\ \ \ \ \ \mbox{\hyperlink{classVector2f}{Vector2f}}\ point\ =\ pointSet[index];}
+\DoxyCodeLine{00273\ \ \ \ \ std::vector<std::shared\_ptr<ListNode>>\ ptrVec;}
+\DoxyCodeLine{00274\ \ \ \ \ findTriangle(index,\ tree.root,\ ptrVec,\ pointSet);}
+\DoxyCodeLine{00275\ \ \ \ \ \textcolor{keywordflow}{if}(ptrVec.size()\ ==\ 1)\ \{}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ std::shared\_ptr<ListNode>\ ptr\ =\ ptrVec[0];}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ ind0\ =\ ptr-\/>tri\_v0,\ ind1\ =\ ptr-\/>tri\_v1,\ ind2\ =\ ptr-\/>tri\_v2;}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ std::shared\_ptr<TreeNode>\ current\_treenode\ =\ ptr-\/>treenode;}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ std::shared\_ptr<ListNode>\ new\_listnode0(\textcolor{keyword}{new}\ \mbox{\hyperlink{structListNode}{ListNode}}(index,\ ind0,\ ind1));}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ std::shared\_ptr<ListNode>\ new\_listnode1(\textcolor{keyword}{new}\ \mbox{\hyperlink{structListNode}{ListNode}}(index,\ ind1,\ ind2));}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ std::shared\_ptr<ListNode>\ new\_listnode2(\textcolor{keyword}{new}\ \mbox{\hyperlink{structListNode}{ListNode}}(index,\ ind2,\ ind0));}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ std::shared\_ptr<TreeNode>\ new\_treenode0(\textcolor{keyword}{new}\ \mbox{\hyperlink{structTreeNode}{TreeNode}}(index,\ ind0,\ ind1));}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ std::shared\_ptr<TreeNode>\ new\_treenode1(\textcolor{keyword}{new}\ \mbox{\hyperlink{structTreeNode}{TreeNode}}(index,\ ind1,\ ind2));}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ std::shared\_ptr<TreeNode>\ new\_treenode2(\textcolor{keyword}{new}\ \mbox{\hyperlink{structTreeNode}{TreeNode}}(index,\ ind2,\ ind0));}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ linkEdge(new\_listnode0);}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ linkEdge(new\_listnode1);}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ linkEdge(new\_listnode2);}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ crossLink(new\_listnode0,\ new\_treenode0);}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ crossLink(new\_listnode1,\ new\_treenode1);}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ crossLink(new\_listnode2,\ new\_treenode2);}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ current\_treenode-\/>childNum\ =\ 3;}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ current\_treenode-\/>child0\ =\ new\_treenode0;}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ current\_treenode-\/>child1\ =\ new\_treenode1;}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ current\_treenode-\/>child2\ =\ new\_treenode2;}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptr-\/>pre\ ==\ \textcolor{keyword}{nullptr})\ }
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ head\ =\ new\_listnode0;}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ ptr-\/>pre-\/>next\ =\ new\_listnode0;}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ new\_listnode0-\/>pre\ =\ ptr-\/>pre;}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ new\_listnode0-\/>next\ =\ new\_listnode1;}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ new\_listnode1-\/>pre\ =\ new\_listnode0;}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ new\_listnode1-\/>next\ =\ new\_listnode2;}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ new\_listnode2-\/>pre\ =\ new\_listnode1;}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ new\_listnode2-\/>next\ =\ ptr-\/>next;}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(new\_listnode2-\/>next\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ new\_listnode2-\/>next-\/>pre\ =\ new\_listnode2;}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ unlinkEdge(ptr);}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ ptr.reset();}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ legalizeEdge(index,\ ind0,\ ind1,\ pointSet);}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ legalizeEdge(index,\ ind1,\ ind2,\ pointSet);}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ legalizeEdge(index,\ ind2,\ ind0,\ pointSet);}
+\DoxyCodeLine{00313\ \ \ \ \ \}}
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(ptrVec.size()\ ==\ 2)\ \{}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ std::shared\_ptr<ListNode>\ ptr0\ =\ ptrVec[0],\ ptr1\ =\ ptrVec[1];}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ ind00\ =\ ptr0-\/>tri\_v0,\ ind01\ =\ ptr0-\/>tri\_v1,\ ind02\ =\ ptr0-\/>tri\_v2;}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ ind10\ =\ ptr1-\/>tri\_v0,\ ind11\ =\ ptr1-\/>tri\_v1,\ ind12\ =\ ptr1-\/>tri\_v2;}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ std::vector<int>\ tmpInd0;\ \textcolor{comment}{//\ points\ that\ are\ used\ twice}}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ std::vector<int>\ tmpInd1;\ \textcolor{comment}{//\ points\ that\ are\ used\ once}}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind00\ ==\ ind10\ ||\ ind00\ ==\ ind11\ ||\ ind00\ ==\ ind12)\ \ tmpInd0.push\_back(ind00);}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ tmpInd1.push\_back(ind00);}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind01\ ==\ ind10\ ||\ ind01\ ==\ ind11\ ||\ ind01\ ==\ ind12)\ \ tmpInd0.push\_back(ind01);}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ tmpInd1.push\_back(ind01);}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind02\ ==\ ind10\ ||\ ind02\ ==\ ind11\ ||\ ind02\ ==\ ind12)\ \ tmpInd0.push\_back(ind02);}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ tmpInd1.push\_back(ind02);}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(tmpInd1[0]\ ==\ ind01)}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(tmpInd0[0],\ tmpInd0[1]);}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ind10\ !=\ ind00\ \&\&\ ind10\ !=\ ind01\ \&\&\ ind10\ !=\ ind02)\ \ tmpInd1.push\_back(ind10);}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(ind11\ !=\ ind00\ \&\&\ ind11\ !=\ ind01\ \&\&\ ind11\ !=\ ind02)\ \ tmpInd1.push\_back(ind11);}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ tmpInd1.push\_back(ind12);}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ std::shared\_ptr<TreeNode>\ current\_treenode0\ =\ ptr0-\/>treenode,\ current\_treenode1\ =\ ptr1-\/>treenode;}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ std::shared\_ptr<ListNode>\ new\_listnode00(\textcolor{keyword}{new}\ \mbox{\hyperlink{structListNode}{ListNode}}(index,\ tmpInd1[0],\ tmpInd0[0]));}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ std::shared\_ptr<ListNode>\ new\_listnode01(\textcolor{keyword}{new}\ \mbox{\hyperlink{structListNode}{ListNode}}(index,\ tmpInd0[1],\ tmpInd1[0]));}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ new\_listnode00-\/>next\ =\ new\_listnode01;}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ new\_listnode01-\/>pre\ =\ new\_listnode00;}
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ std::shared\_ptr<ListNode>\ new\_listnode10(\textcolor{keyword}{new}\ \mbox{\hyperlink{structListNode}{ListNode}}(index,\ tmpInd0[0],\ tmpInd1[1]));}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ std::shared\_ptr<ListNode>\ new\_listnode11(\textcolor{keyword}{new}\ \mbox{\hyperlink{structListNode}{ListNode}}(index,\ tmpInd1[1],\ tmpInd0[1]));}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ new\_listnode10-\/>next\ =\ new\_listnode11;}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ new\_listnode11-\/>pre\ =\ new\_listnode10;}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ std::shared\_ptr<TreeNode>\ new\_treenode00(\textcolor{keyword}{new}\ \mbox{\hyperlink{structTreeNode}{TreeNode}}(index,\ tmpInd1[0],\ tmpInd0[0]));}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ std::shared\_ptr<TreeNode>\ new\_treenode01(\textcolor{keyword}{new}\ \mbox{\hyperlink{structTreeNode}{TreeNode}}(index,\ tmpInd0[1],\ tmpInd1[0]));}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ std::shared\_ptr<TreeNode>\ new\_treenode10(\textcolor{keyword}{new}\ \mbox{\hyperlink{structTreeNode}{TreeNode}}(index,\ tmpInd0[0],\ tmpInd1[1]));}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ std::shared\_ptr<TreeNode>\ new\_treenode11(\textcolor{keyword}{new}\ \mbox{\hyperlink{structTreeNode}{TreeNode}}(index,\ tmpInd1[1],\ tmpInd0[1]));}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ linkEdge(new\_listnode00);}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ linkEdge(new\_listnode01);}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ linkEdge(new\_listnode10);}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ linkEdge(new\_listnode11);}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ crossLink(new\_listnode00,\ new\_treenode00);}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ crossLink(new\_listnode01,\ new\_treenode01);}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ crossLink(new\_listnode10,\ new\_treenode10);}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ crossLink(new\_listnode11,\ new\_treenode11);}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ current\_treenode0-\/>childNum\ =\ 2;}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ current\_treenode0-\/>child0\ =\ new\_treenode00;}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ current\_treenode0-\/>child1\ =\ new\_treenode01;}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ current\_treenode1-\/>childNum\ =\ 2;}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ current\_treenode1-\/>child0\ =\ new\_treenode10;}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ current\_treenode1-\/>child1\ =\ new\_treenode11;}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptr0-\/>pre\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \ \ \ \ head\ =\ new\_listnode00;}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \ \ \ \ ptr0-\/>pre-\/>next\ =\ new\_listnode00;}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ new\_listnode00-\/>pre\ =\ ptr0-\/>pre;}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptr1-\/>pre\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ head\ =\ new\_listnode10;}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ ptr1-\/>pre-\/>next\ =\ new\_listnode10;}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \ \ \ \ new\_listnode10-\/>pre\ =\ ptr1-\/>pre;}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ new\_listnode01-\/>next\ =\ ptr0-\/>next;}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(new\_listnode01-\/>next\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ new\_listnode01-\/>next-\/>pre\ =\ new\_listnode01;}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ new\_listnode11-\/>next\ =\ ptr1-\/>next;}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(new\_listnode11-\/>next\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \ \ new\_listnode11-\/>next-\/>pre\ =\ new\_listnode11;}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ unlinkEdge(ptr0);}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ unlinkEdge(ptr1);}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ ptr0.reset();}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ ptr1.reset();}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ legalizeEdge(index,\ tmpInd0[0],\ tmpInd1[0],\ pointSet);}
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ legalizeEdge(index,\ tmpInd0[0],\ tmpInd1[1],\ pointSet);}
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ legalizeEdge(index,\ tmpInd0[1],\ tmpInd1[0],\ pointSet);}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ legalizeEdge(index,\ tmpInd0[1],\ tmpInd1[1],\ pointSet);}
+\DoxyCodeLine{00384\ \ \ \ \ \}}
+\DoxyCodeLine{00385\ \}}
+\DoxyCodeLine{00386\ }
+\DoxyCodeLine{00387\ \textcolor{comment}{//\ Triangulation:}}
+\DoxyCodeLine{00388\ \textcolor{comment}{//\ 1.\ shuffle\ P\ and\ select\ highest\ point}}
+\DoxyCodeLine{00389\ \textcolor{comment}{//\ 2.\ construct\ bounding\ triangle}}
+\DoxyCodeLine{00390\ \textcolor{comment}{//\ 3.\ for\ each\ point\ p\_r}}
+\DoxyCodeLine{00391\ \textcolor{comment}{//\ \ \ \ case1\ listnode\ =\ find(p\_r)}}
+\DoxyCodeLine{00392\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ add\ three\ new\ triangles\ to\ list}}
+\DoxyCodeLine{00393\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ remove\ old\ triangle\ from\ list}}
+\DoxyCodeLine{00394\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ legalizeEdge(p\_r,\ edge)}}
+\DoxyCodeLine{00395\ \textcolor{comment}{//\ 4.\ remove\ bounding\ triangle}}
+\DoxyCodeLine{00396\ }
+\DoxyCodeLine{00397\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTriangleList_a9a39b7adae7a1aad29e0ad73bd73b2ad}{TriangleList::triangulation}}(std::vector<Vector2f>\&\ pointSet)\ \{}
+\DoxyCodeLine{00398\ \ \ \ \ \textcolor{keywordflow}{if}(pointSet.size()\ <\ 3)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00399\ }
+\DoxyCodeLine{00400\ \ \ \ \ edgeTable\ =\ std::vector<std::vector<std::vector<std::shared\_ptr<ListNode>>>>(pointSet.size()\ +\ 2,\ std::vector<std::vector<std::shared\_ptr<ListNode>>>(pointSet.size()\ +\ 2,\ std::vector<std::shared\_ptr<ListNode>>(0)));}
+\DoxyCodeLine{00401\ \ \ \ \ \textcolor{comment}{//\ select\ highest\ point\ and\ shuffle\ point\ set.\ \ \ \ }}
+\DoxyCodeLine{00402\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <\ pointSet.size();\ i++)\ \{}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((pointSet[i].y\ >\ pointSet[0].y)\ ||\ (pointSet[i].y\ ==\ pointSet[0].y\ \&\&\ pointSet[i].x\ >\ pointSet[0].x))}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ std::swap(pointSet[i],\ pointSet[0]);}
+\DoxyCodeLine{00405\ \ \ \ \ \}}
+\DoxyCodeLine{00406\ \ \ \ \ shuffle(pointSet);}
+\DoxyCodeLine{00407\ \ \ \ \ \textcolor{comment}{//\ construct\ bounding\ triangle}}
+\DoxyCodeLine{00408\ \ \ \ \ head.reset(\textcolor{keyword}{new}\ \mbox{\hyperlink{structListNode}{ListNode}}(-\/2,\ -\/1,\ 0));}
+\DoxyCodeLine{00409\ \ \ \ \ \mbox{\hyperlink{classTriangleTree}{TriangleTree}}\ tree;}
+\DoxyCodeLine{00410\ \ \ \ \ tree.root.reset(\textcolor{keyword}{new}\ \mbox{\hyperlink{structTreeNode}{TreeNode}}(-\/2,\ -\/1,\ 0));}
+\DoxyCodeLine{00411\ \ \ \ \ linkEdge(head);}
+\DoxyCodeLine{00412\ \ \ \ \ crossLink(head,\ tree.root);}
+\DoxyCodeLine{00413\ }
+\DoxyCodeLine{00414\ \ \ \ \ \textcolor{comment}{//\ add\ every\ point\ from\ point\ set}}
+\DoxyCodeLine{00415\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <\ pointSet.size();\ i++)\ \{}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}add\ point\ "{}}\ <<\ i\ <<\ \textcolor{stringliteral}{"{}:\ "{}}\ <<\ pointSet[i]\ <<\ std::endl;}
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \ \ addPoint(pointSet,\ i,\ tree);}
+\DoxyCodeLine{00418\ \ \ \ \ \}}
+\DoxyCodeLine{00419\ }
+\DoxyCodeLine{00420\ \ \ \ \ \textcolor{comment}{//\ remove\ unreal\ triangles}}
+\DoxyCodeLine{00422\ \textcolor{comment}{}\ \ \ \ std::shared\_ptr<ListNode>\ ptr\ =\ head;}
+\DoxyCodeLine{00423\ \ \ \ \ \textcolor{keywordflow}{while}(ptr\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptr-\/>tri\_v0\ <\ 0\ ||\ ptr-\/>tri\_v1\ <\ 0\ ||\ ptr-\/>tri\_v2\ <\ 0)\ \{}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptr\ ==\ head)\ \{}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ head\ =\ head-\/>next;}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ head-\/>pre\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr.reset();}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr\ =\ head;}
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<ListNode>\ tmp\ =\ ptr-\/>next;}
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr-\/>pre-\/>next\ =\ ptr-\/>next;}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptr-\/>next\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr-\/>next-\/>pre\ =\ ptr-\/>pre;}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr.reset();}
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr\ =\ tmp;}
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \ \ \ \ \ \ ptr\ =\ ptr-\/>next;}
+\DoxyCodeLine{00442\ \ \ \ \ \}}
+\DoxyCodeLine{00443\ \ \ \ \ \textcolor{comment}{//*/}}
+\DoxyCodeLine{00444\ \ \ \ \ \textcolor{comment}{//\ show\ bounding\ triangle}}
+\DoxyCodeLine{00445\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00446\ \textcolor{comment}{\ \ \ \ printEdgeTable();}}
+\DoxyCodeLine{00447\ \textcolor{comment}{\ \ \ \ ptr\ =\ head;}}
+\DoxyCodeLine{00448\ \textcolor{comment}{\ \ \ \ while(ptr\ !=\ nullptr)\ \{}}
+\DoxyCodeLine{00449\ \textcolor{comment}{\ \ \ \ \ \ \ \ if(ptr-\/>tri\_v0\ <\ 0\ ||\ ptr-\/>tri\_v1\ <\ 0\ ||\ ptr-\/>tri\_v2\ <\ 0)\ \{}}
+\DoxyCodeLine{00450\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ if(ptr-\/>tri\_v0\ ==\ -\/1)}}
+\DoxyCodeLine{00451\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr-\/>tri\_v0\ =\ pointSet.size()\ -\/\ 1;}}
+\DoxyCodeLine{00452\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ else\ if(ptr-\/>tri\_v0\ ==\ -\/2)}}
+\DoxyCodeLine{00453\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr-\/>tri\_v0\ =\ pointSet.size()\ -\/\ 2;}}
+\DoxyCodeLine{00454\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ if(ptr-\/>tri\_v1\ ==\ -\/1)}}
+\DoxyCodeLine{00455\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr-\/>tri\_v1\ =\ pointSet.size()\ -\/\ 1;}}
+\DoxyCodeLine{00456\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ else\ if(ptr-\/>tri\_v1\ ==\ -\/2)}}
+\DoxyCodeLine{00457\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr-\/>tri\_v1\ =\ pointSet.size()\ -\/\ 2;}}
+\DoxyCodeLine{00458\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ if(ptr-\/>tri\_v2\ ==\ -\/1)}}
+\DoxyCodeLine{00459\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr-\/>tri\_v2\ =\ pointSet.size()\ -\/\ 1;}}
+\DoxyCodeLine{00460\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ else\ if(ptr-\/>tri\_v2\ ==\ -\/2)}}
+\DoxyCodeLine{00461\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptr-\/>tri\_v2\ =\ pointSet.size()\ -\/\ 2;}}
+\DoxyCodeLine{00462\ \textcolor{comment}{}}
+\DoxyCodeLine{00463\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00464\ \textcolor{comment}{\ \ \ \ \ \ \ \ ptr\ =\ ptr-\/>next;}}
+\DoxyCodeLine{00465\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{00466\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{00467\ \}}
+\DoxyCodeLine{00468\ }
+\DoxyCodeLine{00469\ \textcolor{keywordtype}{void}\ TriangleList::drawTriangulation(\textcolor{keyword}{const}\ std::vector<Vector2f>\&\ pointSet,\ \mbox{\hyperlink{classScreen}{Screen}}\&\ scn)\ \{}
+\DoxyCodeLine{00470\ \ \ \ \ std::shared\_ptr<ListNode>\ ptr\ =\ head;}
+\DoxyCodeLine{00471\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0;}
+\DoxyCodeLine{00472\ \ \ \ \ \textcolor{keywordflow}{while}(ptr\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTriangle}{Triangle}}\ tri(pointSet[ptr-\/>tri\_v0],\ pointSet[ptr-\/>tri\_v1],\ pointSet[ptr-\/>tri\_v2]);}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ drawTriangle(tri,\ scn);}
+\DoxyCodeLine{00475\ \ \ \ \ \ \ \ \ ptr\ =\ ptr-\/>next;}
+\DoxyCodeLine{00476\ \ \ \ \ \}}
+\DoxyCodeLine{00477\ \}}
+\DoxyCodeLine{00478\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DELAUNAYTRIANGULATION\_H}}
+
+\end{DoxyCode}

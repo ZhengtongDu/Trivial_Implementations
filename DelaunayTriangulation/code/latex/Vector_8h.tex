@@ -1,0 +1,87 @@
+\hypertarget{Vector_8h}{}\doxysection{Vector.\+h File Reference}
+\label{Vector_8h}\index{Vector.h@{Vector.h}}
+
+
+This file defines a 2D vector class and some useful functions for it.  
+
+
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classVector2f}{Vector2f}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVector2f}{Vector2f}} \mbox{\hyperlink{Vector_8h_adf38a23d7a725f4ea79c9a0147ce1c6d}{lerp}} (const \mbox{\hyperlink{classVector2f}{Vector2f}} \&a, const \mbox{\hyperlink{classVector2f}{Vector2f}} \&b, const float t)
+\item 
+float \mbox{\hyperlink{Vector_8h_a5affc94d54e4c9a93c262d49181daaa2}{dot\+Product}} (const \mbox{\hyperlink{classVector2f}{Vector2f}} \&a, const \mbox{\hyperlink{classVector2f}{Vector2f}} \&b)
+\item 
+float \mbox{\hyperlink{Vector_8h_a341961ee50c8d5be48696ddf386271e8}{cross\+Product}} (const \mbox{\hyperlink{classVector2f}{Vector2f}} \&a, const \mbox{\hyperlink{classVector2f}{Vector2f}} \&b)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file defines a 2D vector class and some useful functions for it. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{Vector_8h_a341961ee50c8d5be48696ddf386271e8}\label{Vector_8h_a341961ee50c8d5be48696ddf386271e8}} 
+\index{Vector.h@{Vector.h}!crossProduct@{crossProduct}}
+\index{crossProduct@{crossProduct}!Vector.h@{Vector.h}}
+\doxysubsubsection{\texorpdfstring{crossProduct()}{crossProduct()}}
+{\footnotesize\ttfamily float cross\+Product (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{a,  }\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Calculate the cross product of two vectors. The return value is positive when the vector obtained by cross product points to the outer of the plane.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & -\/ The first vector. \\
+\hline
+{\em b} & -\/ The second vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The cross product. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{Vector_8h_a5affc94d54e4c9a93c262d49181daaa2}\label{Vector_8h_a5affc94d54e4c9a93c262d49181daaa2}} 
+\index{Vector.h@{Vector.h}!dotProduct@{dotProduct}}
+\index{dotProduct@{dotProduct}!Vector.h@{Vector.h}}
+\doxysubsubsection{\texorpdfstring{dotProduct()}{dotProduct()}}
+{\footnotesize\ttfamily float dot\+Product (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{a,  }\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Calculate the dot product of two vectors.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & -\/ The first vector. \\
+\hline
+{\em b} & -\/ The second vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The dot product. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{Vector_8h_adf38a23d7a725f4ea79c9a0147ce1c6d}\label{Vector_8h_adf38a23d7a725f4ea79c9a0147ce1c6d}} 
+\index{Vector.h@{Vector.h}!lerp@{lerp}}
+\index{lerp@{lerp}!Vector.h@{Vector.h}}
+\doxysubsubsection{\texorpdfstring{lerp()}{lerp()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVector2f}{Vector2f}} lerp (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{a,  }\item[{const \mbox{\hyperlink{classVector2f}{Vector2f}} \&}]{b,  }\item[{const float}]{t }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Linearly interpolate between two vectors a and b.
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & -\/ The first vector. \\
+\hline
+{\em b} & -\/ The second vector. \\
+\hline
+{\em t} & -\/ The interpolation factor. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The interpolated vector. 
+\end{DoxyReturn}
