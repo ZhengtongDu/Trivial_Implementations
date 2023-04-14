@@ -33,3 +33,5 @@
 
 # Shell Script
 *.sh
+**/build/
+**/.vscode/
