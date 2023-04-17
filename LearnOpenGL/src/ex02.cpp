@@ -32,7 +32,7 @@ int main() {
 
     // build and compile our shader program
     // ------------------------------------
-    Shader ourShader("../shaders/shader_ex02.vs", "../shaders/shader_ex02.fs");
+    Shader ourShader("../shaders/ex02.shader.vs", "../shaders/ex02.shader.fs");
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     //-----------------------------------------------------
