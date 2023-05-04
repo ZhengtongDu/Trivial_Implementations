@@ -1,5 +1,5 @@
-#ifndef SHADER_H
-#define SHADER_H
+#ifndef SHADER_S_H
+#define SHADER_S_H
 
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>  
@@ -137,4 +137,4 @@ void Shader::setMat4(const std::string &name, const glm::mat4& mat) const {
 }
 
 
-#endif // SHADER_H
+#endif // SHADER_S_H
