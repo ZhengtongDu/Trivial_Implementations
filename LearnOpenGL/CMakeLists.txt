@@ -10,9 +10,18 @@ set(PROJECT_SOURCE_DIR ${PROJECT_DIR}/src)
 set(GLAD_SOURCES
     ${PROJECT_INCLUDE_DIR}/glad/glad.c)
 # 查找 GLFW3 库
-find_package(glfw3 3.2 REQUIRED)
+find_package(
+    glfw3 3.2 REQUIRED
+    assimp REQUIRED
+)
+
+message(STATUS "${ASSIMP_INCLUDE_DIRS}")
+
 # 添加头文件搜索路径
-include_directories(${PROJECT_INCLUDE_DIR})
+include_directories(
+    ${PROJECT_INCLUDE_DIR}
+    ${ASSIMP_INCLUDE_DIRS}
+)
 # 遍历所有可执行文件
 file(GLOB PROJECT_EXECUTABLES ${PROJECT_SOURCE_DIR}/*.cpp)
 foreach(PROJECT_EXECUTABLE ${PROJECT_EXECUTABLES})
@@ -22,4 +31,6 @@ foreach(PROJECT_EXECUTABLE ${PROJECT_EXECUTABLES})
     add_executable(${PROJECT_EXECUTABLE_NAME} ${PROJECT_EXECUTABLE} ${GLAD_SOURCES})
     # 链接 GLFW3 库
     target_link_libraries(${PROJECT_EXECUTABLE_NAME} glfw)
+    # 链接 Assimp库
+    target_link_libraries(${PROJECT_EXECUTABLE_NAME} assimp)
 endforeach(PROJECT_EXECUTABLE)
