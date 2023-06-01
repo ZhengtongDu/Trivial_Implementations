@@ -111,20 +111,26 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
         std::vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
         std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());        
+        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());    
+        std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+        textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());    
     }
     return Mesh(vertices, indices, textures);
 }
 
 unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false) {
     std::string filename = std::string(path);
-    filename = directory + '/' + filename;
+    std::cout << "filename is " << filename << std::endl;
+    std::cout << "directory is " << directory << std::endl;
+    filename = directory + "/" + filename;
+    std::cout << "filename is " << filename << std::endl;
 
     unsigned int textureID;
     glGenTextures(1, &textureID);
 
     int width, height, nrComponents;
     unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+//    std::cout << "data name is " << *data << std::endl;
     if (data)
     {
         GLenum format;
@@ -174,6 +180,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType 
             texture.type = typeName;
             texture.path = str.C_Str();
             textures.push_back(texture);
+            textures_loaded.push_back(texture);
         }
     }
     return textures;

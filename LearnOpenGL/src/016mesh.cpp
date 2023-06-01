@@ -31,7 +31,6 @@ float lastFrame = 0.0f;
 
 int main()
 {
-    std::cout << "1234";
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -67,7 +66,7 @@ int main()
     Shader ourShader("../shaders/016.mesh.vs", "../shaders/016.mesh.fs");
 
     // load model
-    std::string pathName = "../resources/objects/backpack/backpack.obj";
+    std::string pathName = "../resources/objects/nanosuit/nanosuit.obj";
     Model ourModel(pathName);
 
     // start rendering!
@@ -88,20 +87,19 @@ int main()
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        std::cout << "111" << std::endl;
         ourShader.use();
 
         // view/projection transformations
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
-        ourShader.setMat4("Projection", projection);
-        ourShader.setMat4("View", view);
+        ourShader.setMat4("projection", projection);
+        ourShader.setMat4("view", view);
         
         // render the loaded model
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
         model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-        ourShader.setMat4("Model", model);
+        ourShader.setMat4("model", model);
         ourModel.Draw(ourShader);
 
         // glfw: swap buffers and poll IO events (key pressed/ released, mouse moved etc.)
