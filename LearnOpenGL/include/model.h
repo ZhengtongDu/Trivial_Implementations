@@ -120,10 +120,7 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene) {
 
 unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false) {
     std::string filename = std::string(path);
-    std::cout << "filename is " << filename << std::endl;
-    std::cout << "directory is " << directory << std::endl;
     filename = directory + "/" + filename;
-    std::cout << "filename is " << filename << std::endl;
 
     unsigned int textureID;
     glGenTextures(1, &textureID);

@@ -66,7 +66,7 @@ int main()
     Shader ourShader("../shaders/016.mesh.vs", "../shaders/016.mesh.fs");
 
     // load model
-    std::string pathName = "../resources/objects/nanosuit/nanosuit.obj";
+    std::string pathName = "../resources/objects/planet/planet.obj";
     Model ourModel(pathName);
 
     // start rendering!
